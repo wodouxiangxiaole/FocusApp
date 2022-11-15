@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/drawable/ic_spinner.xml" value="0.1" />
         <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/activity_main.xml" value="0.286231884057971" />
         <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/fragment_dashboard.xml" value="0.286231884057971" />
         <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/fragment_notifications.xml" value="0.1949685534591195" />
+        <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/fragment_spinner.xml" value="0.378125" />
       </map>
     </option>
   </component>
