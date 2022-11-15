@@ -1,4 +1,4 @@
-package com.example.focusapp
+package com.xd.focusapp
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.focusapp.databinding.ActivityMainBinding
+import com.xd.focusapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +26,11 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_setting,
+                R.id.navigation_activity,
+                R.id.navigation_focus,
+                R.id.navigation_spinner,
+                R.id.navigation_collection
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

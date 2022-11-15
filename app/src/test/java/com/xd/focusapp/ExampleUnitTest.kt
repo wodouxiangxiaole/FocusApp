@@ -1,4 +1,4 @@
-package com.example.focusapp
+package com.xd.focusapp
 
 import org.junit.Test
 

@@ -1,13 +1,13 @@
-package com.example.focusapp.ui.dashboard
+package com.xd.focusapp.ui.collection
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class CollectionViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is Collection Fragment"
     }
     val text: LiveData<String> = _text
 }

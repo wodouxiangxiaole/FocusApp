@@ -1,13 +1,13 @@
-package com.example.focusapp.ui.home
+package com.xd.focusapp.ui.spinner
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class SpinnerViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is Spinner Fragment"
     }
     val text: LiveData<String> = _text
 }

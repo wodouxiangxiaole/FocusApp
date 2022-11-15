@@ -1,13 +1,13 @@
-package com.example.focusapp.ui.notifications
+package com.xd.focusapp.ui.setting
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class SettingViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is Setting Fragment"
     }
     val text: LiveData<String> = _text
 }

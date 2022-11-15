@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_focus">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.focusapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_setting"
+        android:name="com.xd.focusapp.ui.setting.SettingFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_setting" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.focusapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_activity"
+        android:name="com.xd.focusapp.ui.activity.ActivityFragment"
+        android:label="@string/title_activity"
+        tools:layout="@layout/fragment_activity" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.focusapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_focus"
+        android:name="com.xd.focusapp.ui.focus.FocusFragment"
+        android:label="@string/title_focus"
+        tools:layout="@layout/fragment_focus" />
+
+    <fragment
+        android:id="@+id/navigation_spinner"
+        android:name="com.xd.focusapp.ui.spinner.SpinnerFragment"
+        android:label="@string/title_spinner"
+        tools:layout="@layout/fragment_spinner" />
+
+    <fragment
+        android:id="@+id/navigation_collection"
+        android:name="com.xd.focusapp.ui.collection.CollectionFragment"
+        android:label="@string/title_collection"
+        tools:layout="@layout/fragment_collection" />
 </navigation>
