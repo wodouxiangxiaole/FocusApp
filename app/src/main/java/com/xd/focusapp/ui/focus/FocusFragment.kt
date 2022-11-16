@@ -22,6 +22,7 @@ import org.w3c.dom.Text
 
 
 class FocusFragment : Fragment() {
+    private lateinit var focusViewModel: FocusViewModel
 
     private var _binding: FragmentFocusBinding? = null
 
@@ -34,11 +35,15 @@ class FocusFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val focusViewModel =
-            ViewModelProvider(this).get(FocusViewModel::class.java)
+        var factory = FocusViewModelFactory()
+
+        focusViewModel =
+            ViewModelProvider(requireActivity(), factory).get(FocusViewModel::class.java)
 
         _binding = FragmentFocusBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
 
 //        val textView: TextView = binding.textFocus
 //        focusViewModel.text.observe(viewLifecycleOwner) {
@@ -49,6 +54,13 @@ class FocusFragment : Fragment() {
         setTimer.setOnClickListener { it->
             var timePickerDialog = TimePickerFragment()
             timePickerDialog.show(requireActivity().supportFragmentManager,"")
+        }
+        focusViewModel.timer.observe(requireActivity()){
+            println("DEBUGG timer observe " + it)
+            var hour = it / 60
+            var minute = it % 60
+
+            setTimer.text = String.format("%s:%s", hour, minute)
         }
 
         return root
