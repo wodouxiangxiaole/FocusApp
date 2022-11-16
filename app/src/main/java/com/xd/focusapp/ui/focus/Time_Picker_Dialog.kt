@@ -1,7 +1,9 @@
 package com.xd.focusapp.ui.focus
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
@@ -18,7 +20,7 @@ class TimePickerFragment : DialogFragment(), DialogInterface.OnClickListener  {
         var focusViewModel =
             ViewModelProvider(requireActivity(), factory).get(FocusViewModel::class.java)
         val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("Set Timer")
+        builder.setTitle("Set Timer In Minutes")
         // Set up the input
         val input = EditText(requireActivity())
 
@@ -29,8 +31,14 @@ class TimePickerFragment : DialogFragment(), DialogInterface.OnClickListener  {
 //            editor?.putString(DURATION_DIALOG, input.text.toString())
 //            editor?.commit()
             var timerResult = input.text.toString()
-            focusViewModel.timer.value = Integer.parseInt(timerResult)
+            var time = Integer.parseInt(timerResult)
+            focusViewModel.timer.value = time
             println("DEBUGG timer set " + timerResult)
+
+            val sharedPreference: SharedPreferences? = requireActivity().getSharedPreferences("FocusApp", Context.MODE_PRIVATE)
+            val editor = sharedPreference?.edit()
+            editor?.putInt("Timer", time)
+            editor?.commit()
 
             dialog.dismiss()
         }
