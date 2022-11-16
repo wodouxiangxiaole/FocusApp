@@ -15,7 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.xd.focusapp.R
 import com.xd.focusapp.databinding.FragmentSpinnerBinding
+import com.xd.focusapp.ui.collection.CollectionFragment
+import com.xd.focusapp.ui.collection.CollectionViewModel
+import com.xd.focusapp.ui.collection.Tree
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SpinnerFragment : Fragment() {
 
@@ -29,8 +33,6 @@ class SpinnerFragment : Fragment() {
     private lateinit var wheel: ImageView
 
     private val sectors = arrayOf("common", "uncommon", "rare", "legendary")
-    private val sectorsDegree = arrayOf(0, 180, 288, 342)
-    private var degree:Int = 0
     private var isSpinning:Boolean = false
 
     override fun onCreateView(
@@ -67,24 +69,31 @@ class SpinnerFragment : Fragment() {
         rotateAnimation.setAnimationListener(object: Animation.AnimationListener{
             override fun onAnimationEnd(p0: Animation?) {
                 isSpinning = false
-                var res:String
+                var res:Int
                 if(randomDegree <= 180){
-                    res = "common"
+                    res = 3
                 }
                 else if(randomDegree <= 288){
-                    res = "uncommon"
+                    res = 2
                 }
                 else if(randomDegree <= 342){
-                    res = "rare"
+                    res = 1
                 }
                 else{
-                    res = "legendary"
+                    res = 0
                 }
-                Toast.makeText(requireActivity(),"You got " + res, Toast.LENGTH_SHORT).show()
+                // Get tree object
+                // random unlock 1 tree in current rank level
+                // use shared preference to pass data
+                val collectionViewModel =
+                    ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
+
+                collectionViewModel.setUnlock(res)
+
             }
 
             override fun onAnimationStart(p0: Animation?) {
-                println(randomDegree)
+                // println(randomDegree)
             }
 
             override fun onAnimationRepeat(p0: Animation?) {
