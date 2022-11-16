@@ -49,19 +49,17 @@ class CollectionViewModel : ViewModel() {
     var imageToShow = MutableLiveData<ArrayList<Tree>>()
     val update = MutableLiveData<Int>()
 
-    var test: LiveData<ArrayList<Tree>> = imageToShow
-
-
     init {
         Task()
     }
 
-    private fun Task(){
+    fun Task(){
         CoroutineScope(IO).launch {
 
+            imageList.clear()
+
             for (i in 0..images.size - 1) {
-                var image = images[i]
-                imageList.add(Tree(treeName[i], image))
+                imageList.add(Tree(treeName[i], images[i]))
             }
 
             imageList[0].setRank(1)
@@ -79,6 +77,34 @@ class CollectionViewModel : ViewModel() {
             imageList[12].setRank(3)
             imageList[13].setRank(1)
 
+
+
+
+            updateOnMainThread(imageList)
+
+
+        }
+    }
+
+    fun unlock(rank: Int){
+        CoroutineScope(IO).launch {
+
+            val randomInts = generateSequence {
+                Random.nextInt(0, imageList.size - 1)
+            }.distinct().take(imageList.size - 1).toSet().shuffled()
+
+            var set = false
+
+            println("debug___: ${rank}")
+
+            randomInts.forEach { e ->
+                if ((imageList[e].getRank() == rank) && !set) {
+                    imageList[e].unLock()
+                    set = true
+                    println("debug___: e = ${e}")
+                }
+            }
+
             updateOnMainThread(imageList)
         }
     }
@@ -86,36 +112,9 @@ class CollectionViewModel : ViewModel() {
     private suspend fun updateOnMainThread(modalList: ArrayList<Tree>){
         withContext(Main){
             imageToShow.value = modalList
-            test = imageToShow
         }
     }
 
-
-    fun setUnlock(rank:Int){
-
-        CoroutineScope(IO).launch {
-            val randomInts = generateSequence {
-                Random.nextInt(0,imageList.size - 1)
-            }.distinct().take(imageList.size - 1).toSet().shuffled()
-
-            var set = false
-
-            randomInts.forEach{ e->
-                if((imageList[e].getRank() == rank) && !set){
-                    imageList[e].unLock()
-                    set = true
-                }
-            }
-
-            println("debug2: ----- setUnlock() called")
-
-            imageList.add(Tree("n", R.drawable.image1))
-
-            updateOnMainThread(imageList)
-        }
-
-
-    }
 
 
 

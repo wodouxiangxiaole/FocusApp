@@ -14,9 +14,11 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.xd.focusapp.R
 import com.xd.focusapp.TreeDetail
 import com.xd.focusapp.databinding.FragmentCollectionBinding
+import com.xd.focusapp.ui.spinner.SpinnerViewModel
 
 
 class CollectionFragment : Fragment() {
@@ -37,7 +39,7 @@ class CollectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val collectionViewModel =
-            ViewModelProvider(this).get(CollectionViewModel::class.java)
+            ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
 
         _binding = FragmentCollectionBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -49,11 +51,11 @@ class CollectionFragment : Fragment() {
         // initialize image list
         imageList = ArrayList()
         // Use custom adapter to put image
-        customAdapter = CustomAdapter(imageList, requireActivity())
+        customAdapter = CustomAdapter(imageList, root.context)
 
         gridView.adapter = customAdapter
 
-        collectionViewModel.test.observe(requireActivity(), Observer {
+        collectionViewModel.imageToShow.observe(viewLifecycleOwner, Observer {
 
             customAdapter.replace(it)
             customAdapter.notifyDataSetChanged()
@@ -68,6 +70,7 @@ class CollectionFragment : Fragment() {
             startActivity(intent)
 
         }
+
 
         return root
     }
@@ -111,7 +114,7 @@ class CollectionFragment : Fragment() {
             val matrix = ColorMatrix()
             matrix.setSaturation(0f)
             // if lock ==> lock it
-            if(position != 5){
+            if(!itemModel[position].status){
                 imageView?.setColorFilter(ColorMatrixColorFilter(matrix))
             }
 

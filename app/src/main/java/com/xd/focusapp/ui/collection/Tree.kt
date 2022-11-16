@@ -12,14 +12,14 @@ class Tree {
     // 3 - common
     private var rank:Int = 3
 
-
     // control user lock or unlock
-    var status:Boolean = false
+    var status:Boolean
 
     constructor(name:String, image:Int){
         this.image = image
         this.treeName = name
-        this.rank = rank
+        this.rank = 3
+        this.status = false
     }
 
     fun unLock(){

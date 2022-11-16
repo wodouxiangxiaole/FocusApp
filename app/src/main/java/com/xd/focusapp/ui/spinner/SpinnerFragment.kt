@@ -1,5 +1,6 @@
 package com.xd.focusapp.ui.spinner
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,13 +36,20 @@ class SpinnerFragment : Fragment() {
     private val sectors = arrayOf("common", "uncommon", "rare", "legendary")
     private var isSpinning:Boolean = false
 
+    private lateinit var spinnerViewModel: SpinnerViewModel
+
+    private lateinit var collectionViewModel: CollectionViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val spinnerViewModel =
+        spinnerViewModel =
             ViewModelProvider(this).get(SpinnerViewModel::class.java)
+
+        collectionViewModel =
+            ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
 
         _binding = FragmentSpinnerBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -85,10 +93,11 @@ class SpinnerFragment : Fragment() {
                 // Get tree object
                 // random unlock 1 tree in current rank level
                 // use shared preference to pass data
-                val collectionViewModel =
-                    ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
 
-                collectionViewModel.setUnlock(res)
+                Toast.makeText(activity,"You got ${sectors[3-res]}",Toast.LENGTH_SHORT).show()
+
+
+                collectionViewModel.unlock(res)
 
             }
 
