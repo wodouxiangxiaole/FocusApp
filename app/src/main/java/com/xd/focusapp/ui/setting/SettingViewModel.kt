@@ -6,6 +6,12 @@ import androidx.lifecycle.ViewModel
 
 class SettingViewModel : ViewModel() {
 
+    val settingOptions = arrayOf(
+        "Account Security",
+        "Message Notifications", "General", "Friends' Permissions",
+        "About", "Help & Feedback",
+        "Log out")
+
     private val _text = MutableLiveData<String>().apply {
         value = "This is Setting Fragment"
     }
