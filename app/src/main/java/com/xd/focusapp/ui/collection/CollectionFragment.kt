@@ -56,7 +56,7 @@ class CollectionFragment : Fragment() {
         gridView.adapter = customAdapter
 
         collectionViewModel.imageToShow.observe(viewLifecycleOwner, Observer {
-
+            imageList = it
             customAdapter.replace(it)
             customAdapter.notifyDataSetChanged()
         })
@@ -66,6 +66,9 @@ class CollectionFragment : Fragment() {
         gridView.setOnItemClickListener{adapterView, view, i, l ->
 
             val intent = Intent(requireActivity(), TreeDetail::class.java)
+            intent.putExtra("image", imageList[i].image)
+            intent.putExtra("rarity", imageList[i].getRank())
+            intent.putExtra("name", imageList[i].treeName)
 
             startActivity(intent)
 
