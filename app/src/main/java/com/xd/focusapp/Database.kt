@@ -1,25 +1,31 @@
 package com.xd.focusapp
+
+import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
 import java.sql.Connection
 import java.sql.DriverManager
+import java.sql.Statement
+
 
 class Database {
     private var connection: Connection? = null
 
-    // For Amazon Postgresql
-    // private final String host = "ssprojectinstance.csv2nbvvgbcb.us-east-2.rds.amazonaws.com"
+    // For Local postgresSQL
+    private val host = "10.0.2.2"
+
     // For Google Cloud Postgresql
-    // private final String host = "35.44.16.169";
-    // For Local PostgreSQL
-    private val host = "104.198.169.251"
-    private val database = "focusapp"
+    // private val host = "104.198.169.251"
+    private val database = "focus_app_db"
     private val port = 5432
     private val user = "postgres"
-    private val pass = "cmpt362"
+    private val pass = "123wzqshuai"
     private var url = "jdbc:postgresql://%s:%d/%s"
     private var status = false
 
     init {
         url = String.format(url, this.host, this.port, this.database)
+
+        println("debug: $url")
         connect()
         //this.disconnect();
         println("connection status:$status")
@@ -30,6 +36,7 @@ class Database {
             try {
                 Class.forName("org.postgresql.Driver")
                 connection = DriverManager.getConnection(url, user, pass)
+
                 status = true
                 println("connected:$status")
             } catch (e: Exception) {
@@ -58,4 +65,20 @@ class Database {
             }
             return c
         }
+
+    fun insert(query:String){
+        try{
+            val stat:Statement = connection!!.createStatement()
+            stat.executeUpdate(query)
+        }
+        catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    fun closeConnection(){
+        connection!!.close()
+    }
+
+
 }

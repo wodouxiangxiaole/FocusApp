@@ -121,8 +121,6 @@ class CollectionFragment : Fragment() {
                 imageView?.setColorFilter(ColorMatrixColorFilter(matrix))
             }
 
-
-
             return view!!
         }
 
@@ -131,5 +129,7 @@ class CollectionFragment : Fragment() {
         }
 
     }
+
+
 
 }

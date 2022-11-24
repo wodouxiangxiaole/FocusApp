@@ -2,6 +2,7 @@ package com.xd.focusapp.ui.login
 
 import android.app.Activity
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.xd.focusapp.Database
 import com.xd.focusapp.MainActivity
 import com.xd.focusapp.databinding.ActivityLoginBinding
 
@@ -25,6 +27,13 @@ class ActivityLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db = Database()
+
+        // test
+        // val query = "INSERT INTO test VALUES (1, 'test123')"
+        // db.insert(query)
+
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
