@@ -46,8 +46,23 @@ class CollectionViewModel : ViewModel() {
 
     private var imageList:ArrayList<Tree> = ArrayList()
 
-    var imageToShow = MutableLiveData<ArrayList<Tree>>()
-    val update = MutableLiveData<Int>()
+    private var imageListRare:ArrayList<Tree> = ArrayList()
+    private var imageListCommon:ArrayList<Tree> = ArrayList()
+    private var imageListUncommon:ArrayList<Tree> = ArrayList()
+    private var imageListLegendary:ArrayList<Tree> = ArrayList()
+
+//    var imageToShow = MutableLiveData<ArrayList<Tree>>()
+//    val update = MutableLiveData<Int>()
+
+    var imageToShowRare = MutableLiveData<ArrayList<Tree>>()
+    var imageToShowCommon = MutableLiveData<ArrayList<Tree>>()
+    var imageToShowUncommon = MutableLiveData<ArrayList<Tree>>()
+    var imageToShowLegendary = MutableLiveData<ArrayList<Tree>>()
+
+    private var LEGENDARY = 0
+    private var RARE = 1
+    private var UNCOMMON = 2
+    private var COMMON = 3
 
     init {
         Task()
@@ -79,8 +94,23 @@ class CollectionViewModel : ViewModel() {
 
 
 
+            for (i in images.indices) {
+                if(imageList[i].getRank() == RARE){
+                    imageListRare.add(imageList[i])
+                }
+                else if(imageList[i].getRank() == LEGENDARY){
+                    imageListLegendary.add(imageList[i])
+                }
+                else if(imageList[i].getRank() == COMMON){
+                    imageListCommon.add(imageList[i])
+                }
+                else if(imageList[i].getRank() == UNCOMMON){
+                    imageListUncommon.add(imageList[i])
+                }
+            }
 
-            updateOnMainThread(imageList)
+
+            updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary)
 
 
         }
@@ -89,29 +119,35 @@ class CollectionViewModel : ViewModel() {
     fun unlock(rank: Int){
         CoroutineScope(IO).launch {
 
-            val randomInts = generateSequence {
-                Random.nextInt(0, imageList.size - 1)
-            }.distinct().take(imageList.size - 1).toSet().shuffled()
-
-            var set = false
-
-            println("debug___: ${rank}")
-
-            randomInts.forEach { e ->
-                if ((imageList[e].getRank() == rank) && !set) {
-                    imageList[e].unLock()
-                    set = true
-                    println("debug___: e = ${e}")
+            when (rank) {
+                COMMON -> {
+                    val rand =(0 until imageListCommon.size).shuffled().last()
+                    imageListCommon[rand].unLock()
+                }
+                UNCOMMON -> {
+                    val rand =(0 until imageListUncommon.size).shuffled().last()
+                    imageListUncommon[rand].unLock()
+                }
+                RARE -> {
+                    val rand =(0 until imageListRare.size).shuffled().last()
+                    imageListRare[rand].unLock()
+                }
+                else -> {
+                    val rand =(0 until imageListLegendary.size).shuffled().last()
+                    imageListLegendary[rand].unLock()
                 }
             }
 
-            updateOnMainThread(imageList)
+            updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary)
         }
     }
 
-    private suspend fun updateOnMainThread(modalList: ArrayList<Tree>){
+    private suspend fun updateOnMainThread(imageListRare:ArrayList<Tree>,imageListCommon:ArrayList<Tree>,imageListUncommon:ArrayList<Tree>,imageListLegendary:ArrayList<Tree>){
         withContext(Main){
-            imageToShow.value = modalList
+            imageToShowRare.value = imageListRare
+            imageToShowCommon.value = imageListCommon
+            imageToShowUncommon.value = imageListUncommon
+            imageToShowLegendary.value = imageListLegendary
         }
     }
 

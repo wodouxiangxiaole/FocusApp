@@ -11,10 +11,10 @@ class Database {
     private var connection: Connection? = null
 
     // For Local postgresSQL
-    private val host = "10.0.2.2"
+    // private val host = "10.0.2.2"
 
     // For Google Cloud Postgresql
-    // private val host = "104.198.169.251"
+    private val host = "104.198.169.251"
     private val database = "focus_app_db"
     private val port = 5432
     private val user = "postgres"
@@ -35,7 +35,7 @@ class Database {
         val thread = Thread {
             try {
                 Class.forName("org.postgresql.Driver")
-                connection = DriverManager.getConnection(url, user, pass)
+                connection = DriverManager.getConnection(url)
 
                 status = true
                 println("connected:$status")

@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.xd.focusapp.R
 import com.xd.focusapp.TreeDetail
 import com.xd.focusapp.databinding.FragmentCollectionBinding
@@ -33,6 +36,19 @@ class CollectionFragment : Fragment() {
 
     private lateinit var customAdapter:CustomAdapter
 
+    private lateinit var rareFragment:RareFragment
+    private lateinit var commonFragment:CommonFragment
+    private lateinit var unCommonFragment: UncommonFragment
+    private lateinit var legendaryFragment: LegendaryFragment
+
+    private lateinit var fragments:ArrayList<Fragment>
+    private lateinit var tabLayout:TabLayout
+    private lateinit var viewPager2: ViewPager2
+    private lateinit var myFragmentStateAdapter: MyFragmentStateAdapter
+    private val tabTitles = arrayOf("COMMON", "UNCOMMON", "RARE", "LEGENDARY")
+    private lateinit var tabConfigurationStrategy: TabLayoutMediator.TabConfigurationStrategy
+    private lateinit var tabLayoutMediator: TabLayoutMediator
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,36 +60,64 @@ class CollectionFragment : Fragment() {
         _binding = FragmentCollectionBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        gridView = root.findViewById(R.id.gridView)
+        rareFragment = RareFragment()
+        commonFragment = CommonFragment()
+        unCommonFragment = UncommonFragment()
+        legendaryFragment = LegendaryFragment()
+        fragments = ArrayList()
+        fragments.add(commonFragment)
+        fragments.add(unCommonFragment)
+        fragments.add(rareFragment)
+        fragments.add(legendaryFragment)
 
-        println("debug2: onCreate() Called")
-
-        // initialize image list
-        imageList = ArrayList()
-        // Use custom adapter to put image
-        customAdapter = CustomAdapter(imageList, root.context)
-
-        gridView.adapter = customAdapter
-
-        collectionViewModel.imageToShow.observe(viewLifecycleOwner, Observer {
-            imageList = it
-            customAdapter.replace(it)
-            customAdapter.notifyDataSetChanged()
-        })
+        tabLayout = root.findViewById(R.id.tab)
+        viewPager2 = root.findViewById(R.id.viewpager)
 
 
+        myFragmentStateAdapter = MyFragmentStateAdapter(requireActivity(), fragments)
+        viewPager2.adapter = myFragmentStateAdapter
 
-        gridView.setOnItemClickListener{adapterView, view, i, l ->
-
-            val intent = Intent(requireActivity(), TreeDetail::class.java)
-            intent.putExtra("image", imageList[i].image)
-            intent.putExtra("rarity", imageList[i].getRank())
-            intent.putExtra("name", imageList[i].treeName)
-
-            startActivity(intent)
-
+        tabConfigurationStrategy = TabLayoutMediator.TabConfigurationStrategy(){
+                tab: TabLayout.Tab, position:Int ->
+            tab.text = tabTitles[position]
         }
+        tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager2, tabConfigurationStrategy)
+        tabLayoutMediator.attach()
 
+
+
+//        gridView = root.findViewById(R.id.gridView)
+//
+//        println("debug2: onCreate() Called")
+//
+//        // initialize image list
+//        imageList = ArrayList()
+//        // Use custom adapter to put image
+//        customAdapter = CustomAdapter(imageList, root.context)
+//
+//        gridView.adapter = customAdapter
+//
+//
+//
+//        collectionViewModel.imageToShow.observe(viewLifecycleOwner, Observer {
+//            imageList = it
+//            customAdapter.replace(it)
+//            customAdapter.notifyDataSetChanged()
+//        })
+//
+//
+//
+//        gridView.setOnItemClickListener{adapterView, view, i, l ->
+//
+//            val intent = Intent(requireActivity(), TreeDetail::class.java)
+//            intent.putExtra("image", imageList[i].image)
+//            intent.putExtra("rarity", imageList[i].getRank())
+//            intent.putExtra("name", imageList[i].treeName)
+//
+//            startActivity(intent)
+//
+//        }
+//
 
         return root
     }
