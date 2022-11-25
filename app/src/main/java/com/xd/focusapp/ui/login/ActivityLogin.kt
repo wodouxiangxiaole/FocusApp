@@ -42,6 +42,7 @@ class ActivityLogin : AppCompatActivity() {
         val password = binding.inputPasswordLogin
         val login = binding.loginButton
         val loading = binding.loading
+        loading.visibility = View.INVISIBLE
         val guest = binding.GuestLoginBtn
         val signUp = binding.noAccountTv
         val pwReset = binding.forgetPwTv
