@@ -31,10 +31,6 @@ class CollectionFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var gridView:GridView
-    private lateinit var imageList:ArrayList<Tree>
-
-    private lateinit var customAdapter:CustomAdapter
 
     private lateinit var rareFragment:RareFragment
     private lateinit var commonFragment:CommonFragment
@@ -86,38 +82,6 @@ class CollectionFragment : Fragment() {
 
 
 
-//        gridView = root.findViewById(R.id.gridView)
-//
-//        println("debug2: onCreate() Called")
-//
-//        // initialize image list
-//        imageList = ArrayList()
-//        // Use custom adapter to put image
-//        customAdapter = CustomAdapter(imageList, root.context)
-//
-//        gridView.adapter = customAdapter
-//
-//
-//
-//        collectionViewModel.imageToShow.observe(viewLifecycleOwner, Observer {
-//            imageList = it
-//            customAdapter.replace(it)
-//            customAdapter.notifyDataSetChanged()
-//        })
-//
-//
-//
-//        gridView.setOnItemClickListener{adapterView, view, i, l ->
-//
-//            val intent = Intent(requireActivity(), TreeDetail::class.java)
-//            intent.putExtra("image", imageList[i].image)
-//            intent.putExtra("rarity", imageList[i].getRank())
-//            intent.putExtra("name", imageList[i].treeName)
-//
-//            startActivity(intent)
-//
-//        }
-//
 
         return root
     }
@@ -130,48 +94,6 @@ class CollectionFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    class CustomAdapter(
-        var itemModel: ArrayList<Tree>,
-        var context: Context
-    ) : BaseAdapter() {
-        override fun getCount(): Int {
-            return itemModel.size
-        }
-
-        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        override fun getItem(p0: Int): Any {
-            return itemModel[p0]
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-
-        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
-            var view = view
-            if(view == null){
-                view = layoutInflater.inflate(R.layout.grid_view, viewGroup, false)
-            }
-            var imageView = view?.findViewById<ImageView>(R.id.imageView)
-            imageView?.setImageResource(itemModel[position].image!!)
-
-            // set image to grayscale
-            val matrix = ColorMatrix()
-            matrix.setSaturation(0f)
-            // if lock ==> lock it
-            if(!itemModel[position].status){
-                imageView?.setColorFilter(ColorMatrixColorFilter(matrix))
-            }
-
-            return view!!
-        }
-
-        fun replace(new:ArrayList<Tree>){
-            itemModel = new
-        }
-
     }
 
 

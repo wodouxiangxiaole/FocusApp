@@ -1,7 +1,8 @@
 package com.xd.focusapp
 
-import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.Statement
@@ -18,7 +19,7 @@ class Database {
     private val database = "focus_app_db"
     private val port = 5432
     private val user = "postgres"
-    private val pass = "123wzqshuai"
+    private val pass = "cmpt362"
     private var url = "jdbc:postgresql://%s:%d/%s"
     private var status = false
 
@@ -27,7 +28,7 @@ class Database {
 
         println("debug: $url")
         connect()
-        //this.disconnect();
+        // this.disconnect();
         println("connection status:$status")
     }
 
@@ -35,7 +36,7 @@ class Database {
         val thread = Thread {
             try {
                 Class.forName("org.postgresql.Driver")
-                connection = DriverManager.getConnection(url)
+                connection = DriverManager.getConnection(url, user, pass)
 
                 status = true
                 println("connected:$status")
@@ -70,11 +71,30 @@ class Database {
         try{
             val stat:Statement = connection!!.createStatement()
             stat.executeUpdate(query)
+
         }
         catch (e:Exception){
             e.printStackTrace()
         }
     }
+
+    fun getAllUser(query: String){
+        CoroutineScope(IO).launch {
+            try{
+                val stat:Statement = connection!!.createStatement()
+                val rs = stat.executeQuery(query)
+                while(rs.next()) {
+                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}")
+                }
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+
+            }
+        }
+
+
+     }
 
     fun closeConnection(){
         connection!!.close()

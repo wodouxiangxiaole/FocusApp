@@ -1,12 +1,10 @@
 package com.xd.focusapp.ui.collection
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.xd.focusapp.R
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlin.random.Random
 
 
 class CollectionViewModel : ViewModel() {
@@ -108,11 +106,7 @@ class CollectionViewModel : ViewModel() {
                     imageListUncommon.add(imageList[i])
                 }
             }
-
-
             updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary)
-
-
         }
     }
 
@@ -123,18 +117,22 @@ class CollectionViewModel : ViewModel() {
                 COMMON -> {
                     val rand =(0 until imageListCommon.size).shuffled().last()
                     imageListCommon[rand].unLock()
+                    println("debug: $rand")
                 }
                 UNCOMMON -> {
                     val rand =(0 until imageListUncommon.size).shuffled().last()
                     imageListUncommon[rand].unLock()
+                    println("debug: $rand")
                 }
                 RARE -> {
                     val rand =(0 until imageListRare.size).shuffled().last()
                     imageListRare[rand].unLock()
+                    println("debug: $rand")
                 }
                 else -> {
                     val rand =(0 until imageListLegendary.size).shuffled().last()
                     imageListLegendary[rand].unLock()
+                    println("debug: $rand")
                 }
             }
 

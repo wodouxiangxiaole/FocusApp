@@ -35,6 +35,7 @@ class CustomAdapter(
         var imageView = view?.findViewById<ImageView>(R.id.imageView)
         imageView?.setImageResource(itemModel[position].image!!)
 
+
         // set image to grayscale
         val matrix = ColorMatrix()
         matrix.setSaturation(0f)

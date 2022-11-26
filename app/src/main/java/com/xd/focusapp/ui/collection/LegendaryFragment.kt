@@ -1,6 +1,7 @@
 package com.xd.focusapp.ui.collection
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.xd.focusapp.R
+import com.xd.focusapp.TreeDetail
 import com.xd.focusapp.databinding.FragmentCollectionBinding
 
 class LegendaryFragment:Fragment() {
@@ -36,17 +38,27 @@ class LegendaryFragment:Fragment() {
         // initialize image list
         imageList = ArrayList()
         // Use custom adapter to put image
-        customAdapter = CustomAdapter(imageList, view.context)
+        customAdapter = CustomAdapter(imageList,  view.context)
 
         gridView.adapter = customAdapter
-
-
 
         collectionViewModel.imageToShowLegendary.observe(viewLifecycleOwner, Observer {
             imageList = it
             customAdapter.replace(it)
+            gridView.adapter = customAdapter
             customAdapter.notifyDataSetChanged()
         })
+
+        gridView.setOnItemClickListener{adapterView, view, i, l ->
+
+            val intent = Intent(requireActivity(), TreeDetail::class.java)
+            intent.putExtra("image", imageList[i].image)
+            intent.putExtra("rarity", imageList[i].getRank())
+            intent.putExtra("name", imageList[i].treeName)
+
+            startActivity(intent)
+
+        }
 
         return view
     }

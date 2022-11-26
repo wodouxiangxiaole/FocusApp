@@ -31,8 +31,8 @@ class ActivityLogin : AppCompatActivity() {
         val db = Database()
 
         // test
-        // val query = "INSERT INTO test VALUES (1, 'test123')"
-        // db.insert(query)
+         val query = "select * from users"
+         db.getAllUser(query)
 
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
