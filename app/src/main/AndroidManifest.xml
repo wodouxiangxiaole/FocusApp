@@ -52,6 +52,12 @@
             android:exported="false">
         </activity>
 
+        <activity
+            android:screenOrientation="landscape"
+            android:name=".ui.collection.Game.LaunchGame"
+            android:exported="false">
+        </activity>
+
 
 
         <meta-data

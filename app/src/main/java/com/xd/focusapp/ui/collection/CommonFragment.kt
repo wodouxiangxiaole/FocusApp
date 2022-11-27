@@ -41,9 +41,6 @@ class CommonFragment:Fragment() {
 
         collectionViewModel.imageToShowCommon.observe(viewLifecycleOwner, Observer {
 
-            for(i in 0..4){
-                println("debug: i = ${i}, ${it[i].status}")
-            }
             imageList = it
             customAdapter.replace(it)
             gridView.adapter = customAdapter

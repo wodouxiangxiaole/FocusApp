@@ -21,6 +21,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.xd.focusapp.R
 import com.xd.focusapp.TreeDetail
 import com.xd.focusapp.databinding.FragmentCollectionBinding
+import com.xd.focusapp.ui.collection.Game.LaunchGame
+import com.xd.focusapp.ui.login.ActivitySignup
 import com.xd.focusapp.ui.spinner.SpinnerViewModel
 
 
@@ -95,6 +97,9 @@ class CollectionFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 
 
 

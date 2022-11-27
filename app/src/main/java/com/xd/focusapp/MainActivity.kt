@@ -1,7 +1,9 @@
 package com.xd.focusapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract.Data
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -11,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.xd.focusapp.databinding.ActivityMainBinding
 import com.xd.focusapp.ui.collection.CollectionViewModel
+import com.xd.focusapp.ui.collection.Game.LaunchGame
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun click(view: View){
+        val intent = Intent(this, LaunchGame::class.java)
+        startActivity(intent)
     }
 
 
