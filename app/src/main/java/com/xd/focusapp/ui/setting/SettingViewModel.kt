@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 class SettingViewModel : ViewModel() {
 
     val settingOptions = arrayOf(
+        "Friends",
         "Account Security",
         "Message Notifications", "General", "Friends' Permissions",
         "About", "Help & Feedback",

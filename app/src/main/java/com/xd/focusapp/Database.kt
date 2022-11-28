@@ -26,10 +26,10 @@ class Database {
     init {
         url = String.format(url, this.host, this.port, this.database)
 
-        println("debug: $url")
+     //   println("debug: $url")
         connect()
         // this.disconnect();
-        println("connection status:$status")
+     //   println("connection status:$status")
     }
 
     private fun connect() {
@@ -78,6 +78,30 @@ class Database {
         }
     }
 
+    fun getUser(query: String):MutableMap<String,String>{
+        val map = mutableMapOf<String,String>()
+        val a1 = Thread  {
+            try{
+                val stat:Statement = connection!!.createStatement()
+                val rs = stat.executeQuery(query)
+                while(rs.next()) {
+                    map["name"] = rs.getString(2)
+                    map["email"] = rs.getString(3)
+                    map["credits"] = rs.getString(4)
+                    map["uid"] = rs.getString(5)
+                }
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+
+            }
+        }
+        a1.start()
+        a1.join()
+
+        return map
+    }
+
     fun getAllUser(query: String){
         CoroutineScope(IO).launch {
             try{
@@ -92,8 +116,6 @@ class Database {
 
             }
         }
-
-
      }
 
     fun closeConnection(){
