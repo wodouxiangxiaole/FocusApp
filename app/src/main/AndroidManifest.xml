@@ -28,6 +28,8 @@
 
 
         <activity
+            android:name=".ui.setting.FriendsMainPage" />
+        <activity
             android:name=".ui.login.ActivitySignup"
             android:exported="false">
             <meta-data
@@ -40,9 +42,9 @@
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"
@@ -60,8 +62,8 @@
         </activity>
         <activity
             android:name=".TreeDetail"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
+
 
 
 
