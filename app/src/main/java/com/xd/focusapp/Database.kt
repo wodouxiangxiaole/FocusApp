@@ -78,6 +78,20 @@ class Database {
         }
     }
 
+    fun updateProfileImage(query:String) {
+
+        CoroutineScope(IO).launch{
+            try {
+                val stat: Statement = connection!!.createStatement()
+                stat.executeUpdate(query)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+
     fun getUser(query: String):MutableMap<String,String>{
         val map = mutableMapOf<String,String>()
         val a1 = Thread  {
@@ -89,16 +103,15 @@ class Database {
                     map["email"] = rs.getString(3)
                     map["credits"] = rs.getString(4)
                     map["uid"] = rs.getString(5)
+                    map["icon"]=rs.getString(6)
                 }
             }
             catch (e:Exception){
                 e.printStackTrace()
-
             }
         }
         a1.start()
         a1.join()
-
         return map
     }
 

@@ -8,7 +8,7 @@
     tools:context=".ui.setting.SettingFragment"
     android:orientation="vertical"
     android:weightSum="1">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4"
@@ -20,14 +20,14 @@
         android:layout_height="wrap_content"
         >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/Profile_Image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:src="@drawable/ic_user_profile_img"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:src="@drawable/ic_user_profile_img" />
 <!--            android:onClick="changeProfileImg"/>-->
 
         <TextView
@@ -52,11 +52,20 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_option_btn"
+            android:layout_below="@+id/Profile_User_ID"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text=""/>
 
     </RelativeLayout>
 
 
-    </LinearLayout>
+    </ScrollView>
 
 
     <LinearLayout
