@@ -19,6 +19,8 @@ import com.xd.focusapp.ui.collection.CollectionViewModel
 import com.xd.focusapp.ui.collection.Game.LaunchGame
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var db:Database
+    private lateinit var user:MutableMap<String,String>
 
     private lateinit var binding: ActivityMainBinding
 
@@ -27,6 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = Database()
+        val uemail = intent.getStringExtra("uemail")
+        val query = "select * from users where email = ${uemail};"
+        user = db.getUser(query)
 
         val navView: BottomNavigationView = binding.navView
 

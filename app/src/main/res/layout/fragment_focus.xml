@@ -6,45 +6,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.focus.FocusFragment"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    android:background="@drawable/focus_bg">
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="100dp"
         >
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/seed" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Set Focus Timer"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-thin"
+            android:paddingTop="60dp"
+            android:paddingBottom="10dp"
+            android:text="Focus Timer"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:backgroundTint="@color/white"
+            android:background="@android:color/darker_gray"
             android:layout_gravity="center"/>
+
 
         <TextView
             android:id="@+id/selectTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp"
             android:clickable="true"
             android:ems="10"
+            android:fontFamily="monospace"
             android:onClick="setTimer"
-            android:text="00:00:00" />
+            android:text="01:23:00"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="48sp" />
 
         <Button
             android:id="@+id/timerStartButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start" />
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/green"
+            android:fontFamily="sans-serif-light"
+            android:text="Start"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/countDown"
@@ -52,7 +77,15 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:ems="10"
-            android:text="" />
+            android:text=""
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:textColor="@color/blue_space"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:fontFamily="casual"
+
+            />
     </LinearLayout>
 
 </LinearLayout>

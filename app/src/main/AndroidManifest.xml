@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -17,18 +19,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FocusApp"
         tools:targetApi="31">
+        <service
+            android:name=".FocusService"
+            android:enabled="true"
+            android:exported="true">
 
+        </service>
+
+        <activity
+            android:name=".GoogleLoginActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.collection.Game.LaunchGame"
             android:exported="true"
-            android:theme="@style/Theme.FocusApp.noActionBar"
             android:hardwareAccelerated="true"
             android:screenOrientation="landscape">
         </activity>
 
 
         <activity
-            android:name=".ui.setting.FriendsMainPage" />
+            android:name=".ui.setting.FriendsMainPage"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".ui.login.ActivitySignup"
             android:exported="false">
@@ -62,12 +77,8 @@
         </activity>
         <activity
             android:name=".TreeDetail"
-            android:exported="false"></activity>
-
-
-
-
-
+            android:exported="false">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

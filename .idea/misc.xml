@@ -8,9 +8,11 @@
         <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/fragment_dashboard.xml" value="0.286231884057971" />
         <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/fragment_notifications.xml" value="0.1949685534591195" />
         <entry key="..\:/Users/10247/AndroidStudioProjects/FocusApp/app/src/main/res/layout/fragment_spinner.xml" value="0.378125" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_add_friend_btn.xml" value="0.1625" />
         <entry key="app/src/main/res/drawable/ic_activity.xml" value="0.187" />
         <entry key="app/src/main/res/layout/activity_friends_main_page.xml" value="0.17604166666666668" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>

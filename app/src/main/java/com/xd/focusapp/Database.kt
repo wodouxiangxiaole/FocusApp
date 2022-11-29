@@ -17,6 +17,11 @@ class Database {
     // private val host = "10.0.2.2"
 
     // For Google Cloud Postgresql
+
+    // private final String host = "35.44.16.169";
+    // For Local PostgreSQL
+
+    // Google cloud PostgresSQL login information
     private val host = "104.198.169.251"
     private val database = "focus_app_db"
     private val port = 5432
@@ -73,34 +78,55 @@ class Database {
         try{
             val stat:Statement = connection!!.createStatement()
             stat.executeUpdate(query)
+            println("Debug: database.insert(query) successful")
 
         }
         catch (e:Exception){
+            println("Debug: database.insert(query) failed $e")
             e.printStackTrace()
         }
     }
 
+    fun updateProfileImage(query:String) {
+
+        CoroutineScope(IO).launch{
+            try {
+                val stat: Statement = connection!!.createStatement()
+                stat.executeUpdate(query)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+
     fun getUser(query: String):MutableMap<String,String>{
         val map = mutableMapOf<String,String>()
+        println("debug111:")
         val a1 = Thread  {
             try{
                 val stat:Statement = connection!!.createStatement()
                 val rs = stat.executeQuery(query)
                 while(rs.next()) {
-                    map["name"] = rs.getString(2)
-                    map["email"] = rs.getString(3)
-                    map["credits"] = rs.getString(4)
-                    map["uid"] = rs.getString(5)
+                    map["email"] = rs.getString(1)
+                    map["credits"] = rs.getString(2)
+                    map["uid"] = rs.getString(3)
+                    map["icon"] = rs.getString(4)
+                    map["pwd"] = rs.getString(5)
+                    map["user_name"]=rs.getString(6)
+                    map["fb_uid"]=rs.getString(7)
+//                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}," +
+//                            " ${rs.getString(3)}")
+//                    println("debug111: ${rs.getString(7)}")
                 }
             }
             catch (e:Exception){
                 e.printStackTrace()
-
             }
         }
         a1.start()
         a1.join()
-
         return map
     }
 
@@ -110,7 +136,7 @@ class Database {
                 val stat:Statement = connection!!.createStatement()
                 val rs = stat.executeQuery(query)
                 while(rs.next()) {
-                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}")
+//                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}")
                 }
             }
             catch (e:Exception){
