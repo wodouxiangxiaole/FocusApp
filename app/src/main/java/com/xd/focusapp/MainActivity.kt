@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract.Data
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -55,6 +57,17 @@ class MainActivity : AppCompatActivity() {
 
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
+
+        val dbViewModel =
+            ViewModelProvider(this).get(DatabaseViewModel::class.java)
+
+        // change to proper uid later on
+//        dbViewModel.db.getCredits(1)
+
+        // find menu item and replace item title to current credits
+//        menu!!.findItem(R.id.credits).title = dbViewModel.db.getCredits(1)
+
+
         return true
     }
 

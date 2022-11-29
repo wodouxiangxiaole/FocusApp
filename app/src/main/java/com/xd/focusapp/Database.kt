@@ -1,5 +1,7 @@
 package com.xd.focusapp
 
+import android.util.MutableInt
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -118,9 +120,58 @@ class Database {
         }
      }
 
+    fun getUnlockedId(uid: Int): ArrayList<Int>{
+        var id = ArrayList<Int>()
+        try{
+            val stat:Statement = connection!!.createStatement()
+            val rs = stat.executeQuery("SELECT * FROM users_collect_tree WHERE uid = $uid")
+            while(rs.next()) {
+                id.add(rs.getString(2).toInt())
+            }
+        }
+        catch (e:Exception){
+            e.printStackTrace()
+
+        }
+        return id
+    }
+
     fun closeConnection(){
         connection!!.close()
     }
+
+    fun insertUserCollection(uid: Int, tid: Int) {
+        CoroutineScope(IO).launch {
+            try {
+                val stat: Statement = connection!!.createStatement()
+                stat.executeUpdate("insert INTO users_collect_tree VALUES ($uid, $tid) ")
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+            }
+        }
+    }
+
+//    fun getCredits(uid:Int):String {
+//        val credits = MutableLiveData<String>();
+//        val t = Thread {
+//            try {
+//                val stat: Statement = connection!!.createStatement()
+//                val rs = stat.executeQuery("SELECT credits FROM users WHERE uid = $uid")
+//                while (rs.next()) {
+//                    credits.value = rs.getString(2)
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//
+//            }
+//        }
+//        t.start()
+//        t.join()
+//
+//        return credits.value!!;
+//    }
 
 
 }

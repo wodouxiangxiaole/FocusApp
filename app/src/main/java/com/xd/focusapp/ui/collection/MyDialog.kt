@@ -12,6 +12,7 @@ import com.xd.focusapp.R
 
 class MyDialog: DialogFragment() {
 
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         lateinit var dialog:Dialog
 

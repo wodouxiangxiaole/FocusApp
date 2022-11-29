@@ -18,6 +18,7 @@ import com.xd.focusapp.R
 import com.xd.focusapp.databinding.FragmentSpinnerBinding
 import com.xd.focusapp.ui.collection.CollectionFragment
 import com.xd.focusapp.ui.collection.CollectionViewModel
+import com.xd.focusapp.ui.collection.MyDialog
 import com.xd.focusapp.ui.collection.Tree
 import java.util.*
 import kotlin.collections.ArrayList
@@ -77,32 +78,56 @@ class SpinnerFragment : Fragment() {
         rotateAnimation.setAnimationListener(object: Animation.AnimationListener{
             override fun onAnimationEnd(p0: Animation?) {
                 isSpinning = false
-                var res:Int
-                if(randomDegree <= 180){
-                    res = 3
-                }
-                else if(randomDegree <= 288){
-                    res = 2
-                }
-                else if(randomDegree <= 342){
-                    res = 1
-                }
-                else{
-                    res = 0
+                var res = if(randomDegree <= 180){
+                    3
+                } else if(randomDegree <= 288){
+                    2
+                } else if(randomDegree <= 342){
+                    1
+                } else{
+                    0
                 }
                 // Get tree object
                 // random unlock 1 tree in current rank level
                 // use shared preference to pass data
 
                 Toast.makeText(activity,"You got ${sectors[3-res]}",Toast.LENGTH_SHORT).show()
-                val image = collectionViewModel.unlock(res)
+                val plant = collectionViewModel.unlock(res)
+
                 val dialog = SpinnerFinishDialog()
                 val bundle = Bundle()
+                bundle.putInt("image", plant.image!!)
+
+
+                if(plant.toPoints){
+                    bundle.putInt("key", SpinnerFinishDialog.REPEAT_KEY)
+                    when(res){
+                        0 ->{
+                            bundle.putInt("points", SpinnerFinishDialog.LEGENDARY)
+                        }
+                        1 -> {
+                            bundle.putInt("points", SpinnerFinishDialog.RARE)
+                        }
+                        2 -> {
+                            bundle.putInt("points", SpinnerFinishDialog.UNCOMMON)
+                        }
+                        else -> {
+                            bundle.putInt("points", SpinnerFinishDialog.COMMON)
+                        }
+                    }
+
+                }
+                else{
+                    bundle.putInt("key", SpinnerFinishDialog.NORMAL_KEY)
+                }
+
                 dialog.arguments = bundle
 
-                bundle.putInt("image", image)
-
                 dialog.show(parentFragmentManager, "dialog")
+
+
+
+
 
 
 

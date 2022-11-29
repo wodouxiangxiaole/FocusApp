@@ -1,6 +1,8 @@
 package com.xd.focusapp.ui.collection
+import android.provider.ContactsContract.Data
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.xd.focusapp.Database
 import com.xd.focusapp.R
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -82,12 +84,20 @@ class CollectionViewModel : ViewModel() {
     private var COMMON = 3
 
 
+    // for test purpose
+    val uid = 1
+    private lateinit var db:Database
+
+
     init {
         Task()
     }
 
     fun Task(){
         CoroutineScope(IO).launch {
+
+            db = Database()
+            val idList = db.getUnlockedId(uid)
 
             imageList.clear()
 
@@ -118,6 +128,11 @@ class CollectionViewModel : ViewModel() {
             imageList[19].setRank(2)
             imageList[20].setRank(2)
 
+            for(i in idList.indices){
+                imageList[idList[i]].unLock()
+            }
+
+
 
 
             for (i in images.indices) {
@@ -135,44 +150,57 @@ class CollectionViewModel : ViewModel() {
                 }
             }
 
+
+
             updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary, imageList)
         }
     }
 
-    fun unlock(rank: Int): Int {
+    fun unlock(rank: Int): Tree {
 
 
         var id:Int
 
         when (rank) {
             COMMON -> {
-                val rand =(0 until imageListCommon.size).shuffled().last()
+                val rand =(0 until imageListCommon.size).random()
                 imageListCommon[rand].unLock()
                 id = imageListCommon[rand].id!!
             }
             UNCOMMON -> {
-                val rand =(0 until imageListUncommon.size).shuffled().last()
+                val rand =(0 until imageListUncommon.size).random()
                 imageListUncommon[rand].unLock()
                 id = imageListUncommon[rand].id!!
             }
             RARE -> {
-                val rand =(0 until imageListRare.size).shuffled().last()
+                val rand =(0 until imageListRare.size).random()
                 imageListRare[rand].unLock()
-                id = imageListRare[rand].id!!                }
+                id = imageListRare[rand].id!!
+            }
             else -> {
-                val rand =(0 until imageListLegendary.size).shuffled().last()
+                val rand =(0 until imageListLegendary.size).random()
                 imageListLegendary[rand].unLock()
-                id = imageListLegendary[rand].id!!                }
+                id = imageListLegendary[rand].id!!
+            }
         }
-        imageList[id].unLock()
 
-        imageToShowRare.value = imageListRare
-        imageToShowCommon.value = imageListCommon
-        imageToShowUncommon.value = imageListUncommon
-        imageToShowLegendary.value = imageListLegendary
-        imageToShowAll.value = imageList
 
-        return imageList[id].image!!
+        if(imageList[id].toPoints){
+            return imageList[id]
+        }
+        else{
+            db.insertUserCollection(uid, imageList[id].id!!)
+
+            imageToShowRare.value = imageListRare
+            imageToShowCommon.value = imageListCommon
+            imageToShowUncommon.value = imageListUncommon
+            imageToShowLegendary.value = imageListLegendary
+            imageToShowAll.value = imageList
+
+            return imageList[id]
+        }
+
+
 
     }
 

@@ -54,12 +54,18 @@ class RareFragment:Fragment() {
 
         gridView.setOnItemClickListener{adapterView, view, i, l ->
 
-            val intent = Intent(requireActivity(), TreeDetail::class.java)
-            intent.putExtra("image", imageList[i].image)
-            intent.putExtra("rarity", imageList[i].getRank())
-            intent.putExtra("name", imageList[i].treeName)
+            if(imageList[i].status) {
+                val intent = Intent(requireActivity(), TreeDetail::class.java)
+                intent.putExtra("image", imageList[i].image)
+                intent.putExtra("rarity", imageList[i].getRank())
+                intent.putExtra("name", imageList[i].treeName)
 
-            startActivity(intent)
+                startActivity(intent)
+            }
+            else{
+                val dialog = MyDialog()
+                dialog.show(parentFragmentManager, "alert")
+            }
 
         }
 

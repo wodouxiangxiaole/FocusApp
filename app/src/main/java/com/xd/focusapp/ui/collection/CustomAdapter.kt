@@ -41,7 +41,7 @@ class CustomAdapter(
         matrix.setSaturation(0f)
         // if lock ==> lock it
         if(!itemModel[position].status){
-            imageView?.setColorFilter(ColorMatrixColorFilter(matrix))
+            imageView?.colorFilter = ColorMatrixColorFilter(matrix)
         }
 
         return view!!

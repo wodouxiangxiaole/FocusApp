@@ -12,6 +12,7 @@
     <item
         android:id="@+id/credits"
         app:showAsAction="always"
-        android:title="0" />
+        android:title="0"
+        />
 
 </menu>

@@ -50,7 +50,6 @@ class AllFragment:Fragment() {
         gridView.setOnItemClickListener{adapterView, view, i, l ->
 
             if(imageList[i].status) {
-
                 val intent = Intent(requireActivity(), TreeDetail::class.java)
                 intent.putExtra("image", imageList[i].image)
                 intent.putExtra("rarity", imageList[i].getRank())

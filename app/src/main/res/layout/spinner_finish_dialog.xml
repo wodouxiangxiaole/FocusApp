@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="13dp"
         android:text="Congratulation!"
+        android:id="@+id/dialog_title"
         android:textStyle="bold"
         android:textSize="23dp"
 
