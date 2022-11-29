@@ -71,9 +71,11 @@ class Database {
         try{
             val stat:Statement = connection!!.createStatement()
             stat.executeUpdate(query)
+            println("Debug: database.insert(query) successful")
 
         }
         catch (e:Exception){
+            println("Debug: database.insert(query) failed $e")
             e.printStackTrace()
         }
     }
