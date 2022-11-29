@@ -101,16 +101,22 @@ class Database {
 
     fun getUser(query: String):MutableMap<String,String>{
         val map = mutableMapOf<String,String>()
+        println("debug111:")
         val a1 = Thread  {
             try{
                 val stat:Statement = connection!!.createStatement()
                 val rs = stat.executeQuery(query)
                 while(rs.next()) {
-                    map["name"] = rs.getString(2)
-                    map["email"] = rs.getString(3)
-                    map["credits"] = rs.getString(4)
-                    map["uid"] = rs.getString(5)
-                    map["icon"]=rs.getString(6)
+                    map["email"] = rs.getString(1)
+                    map["credits"] = rs.getString(2)
+                    map["uid"] = rs.getString(3)
+                    map["icon"] = rs.getString(4)
+                    map["pwd"] = rs.getString(5)
+                    map["user_name"]=rs.getString(6)
+                    map["fb_uid"]=rs.getString(7)
+//                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}," +
+//                            " ${rs.getString(3)}")
+//                    println("debug111: ${rs.getString(7)}")
                 }
             }
             catch (e:Exception){
@@ -128,7 +134,7 @@ class Database {
                 val stat:Statement = connection!!.createStatement()
                 val rs = stat.executeQuery(query)
                 while(rs.next()) {
-                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}")
+//                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}")
                 }
             }
             catch (e:Exception){

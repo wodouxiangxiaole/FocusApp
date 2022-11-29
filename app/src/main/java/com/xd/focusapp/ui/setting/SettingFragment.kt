@@ -42,7 +42,7 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var settingOptions: Array<String>
     private lateinit var user:MutableMap<String,String>
-    private val uid = 1
+    private val uid = 3
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,20 +79,22 @@ class SettingFragment : Fragment() {
 
         val query = "select * from users where uid = ${uid};"
         user = db.getUser(query)
-        //println("debug: name ${user["name"]}")
+        println("debug: ${user["email"]},${user["credits"]},${user["uid"]},${user["icon"]},${user["user_name"]}")
 
         userIDTextView = binding.ProfileUserID
         nameTextView = binding.ProfileName
 
         userIDTextView.text = user["uid"]
-        nameTextView.text = user["name"]
+        nameTextView.text = user["user_name"]
         if(user["icon"]!=null){
             val encodedImage = user["icon"]
+            println("debug: icon:$encodedImage")
             val stringImageToByte = Base64.decode(encodedImage, Base64.DEFAULT)
             val profileBitmap = BitmapFactory.decodeByteArray(stringImageToByte,
                 0,stringImageToByte.size)
             profile_image.setImageBitmap(profileBitmap)
         }
+
 
 
 //        val textView: TextView = binding.textSetting
@@ -106,7 +108,7 @@ class SettingFragment : Fragment() {
 
                 for(entry in user.entries){
                     bundle.putString(entry.key,entry.value)
-                    println("debug: entry.key,entry.value, ${entry.key},${entry.value}")
+               //     println("debug: entry.key,entry.value, ${entry.key},${entry.value}")
                 }
 
                 intent.putExtra("user",bundle)
