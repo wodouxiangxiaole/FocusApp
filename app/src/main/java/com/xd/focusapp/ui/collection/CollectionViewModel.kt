@@ -5,9 +5,11 @@ import com.xd.focusapp.R
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class CollectionViewModel : ViewModel() {
+
     var images = intArrayOf(
         R.drawable.image1,
         R.drawable.image2,
@@ -22,7 +24,15 @@ class CollectionViewModel : ViewModel() {
         R.drawable.image11,
         R.drawable.image12,
         R.drawable.image13,
-        R.drawable.image14
+        R.drawable.image14,
+        R.drawable.flower_marguerite,
+        R.drawable.flower_drawing,
+        R.drawable.japanese_flower,
+        R.drawable.pink_flower,
+        R.drawable.purple_flower,
+        R.drawable.velvetty_white_flower,
+        R.drawable.white_flower
+
     )
 
     var treeName = arrayOf(
@@ -39,7 +49,14 @@ class CollectionViewModel : ViewModel() {
         "Normal Tree",
         "Light Green Tree",
         "Top Palm Tree",
-        "Japanese Tree"
+        "Japanese Tree",
+        "Flower Marguerite",
+        "Flower Drawing",
+        "Japanese Flower",
+        "Pink Flower",
+        "Purple Flower",
+        "Velvetty White Flower",
+        "White Flower"
     )
 
     private var imageList:ArrayList<Tree> = ArrayList()
@@ -49,6 +66,7 @@ class CollectionViewModel : ViewModel() {
     private var imageListUncommon:ArrayList<Tree> = ArrayList()
     private var imageListLegendary:ArrayList<Tree> = ArrayList()
 
+
 //    var imageToShow = MutableLiveData<ArrayList<Tree>>()
 //    val update = MutableLiveData<Int>()
 
@@ -56,11 +74,13 @@ class CollectionViewModel : ViewModel() {
     var imageToShowCommon = MutableLiveData<ArrayList<Tree>>()
     var imageToShowUncommon = MutableLiveData<ArrayList<Tree>>()
     var imageToShowLegendary = MutableLiveData<ArrayList<Tree>>()
+    val imageToShowAll = MutableLiveData<ArrayList<Tree>>()
 
     private var LEGENDARY = 0
     private var RARE = 1
     private var UNCOMMON = 2
     private var COMMON = 3
+
 
     init {
         Task()
@@ -72,7 +92,7 @@ class CollectionViewModel : ViewModel() {
             imageList.clear()
 
             for (i in 0..images.size - 1) {
-                imageList.add(Tree(treeName[i], images[i]))
+                imageList.add(Tree(treeName[i], images[i], i))
             }
 
             imageList[0].setRank(1)
@@ -90,6 +110,14 @@ class CollectionViewModel : ViewModel() {
             imageList[12].setRank(3)
             imageList[13].setRank(1)
 
+            imageList[14].setRank(2)
+            imageList[15].setRank(3)
+            imageList[16].setRank(3)
+            imageList[17].setRank(3)
+            imageList[18].setRank(3)
+            imageList[19].setRank(2)
+            imageList[20].setRank(2)
+
 
 
             for (i in images.indices) {
@@ -106,46 +134,56 @@ class CollectionViewModel : ViewModel() {
                     imageListUncommon.add(imageList[i])
                 }
             }
-            updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary)
+
+            updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary, imageList)
         }
     }
 
-    fun unlock(rank: Int){
-        CoroutineScope(IO).launch {
+    fun unlock(rank: Int): Int {
 
-            when (rank) {
-                COMMON -> {
-                    val rand =(0 until imageListCommon.size).shuffled().last()
-                    imageListCommon[rand].unLock()
-                    println("debug: $rand")
-                }
-                UNCOMMON -> {
-                    val rand =(0 until imageListUncommon.size).shuffled().last()
-                    imageListUncommon[rand].unLock()
-                    println("debug: $rand")
-                }
-                RARE -> {
-                    val rand =(0 until imageListRare.size).shuffled().last()
-                    imageListRare[rand].unLock()
-                    println("debug: $rand")
-                }
-                else -> {
-                    val rand =(0 until imageListLegendary.size).shuffled().last()
-                    imageListLegendary[rand].unLock()
-                    println("debug: $rand")
-                }
+
+        var id:Int
+
+        when (rank) {
+            COMMON -> {
+                val rand =(0 until imageListCommon.size).shuffled().last()
+                imageListCommon[rand].unLock()
+                id = imageListCommon[rand].id!!
             }
-
-            updateOnMainThread(imageListRare, imageListCommon, imageListUncommon, imageListLegendary)
+            UNCOMMON -> {
+                val rand =(0 until imageListUncommon.size).shuffled().last()
+                imageListUncommon[rand].unLock()
+                id = imageListUncommon[rand].id!!
+            }
+            RARE -> {
+                val rand =(0 until imageListRare.size).shuffled().last()
+                imageListRare[rand].unLock()
+                id = imageListRare[rand].id!!                }
+            else -> {
+                val rand =(0 until imageListLegendary.size).shuffled().last()
+                imageListLegendary[rand].unLock()
+                id = imageListLegendary[rand].id!!                }
         }
+        imageList[id].unLock()
+
+        imageToShowRare.value = imageListRare
+        imageToShowCommon.value = imageListCommon
+        imageToShowUncommon.value = imageListUncommon
+        imageToShowLegendary.value = imageListLegendary
+        imageToShowAll.value = imageList
+
+        return imageList[id].image!!
+
     }
 
-    private suspend fun updateOnMainThread(imageListRare:ArrayList<Tree>,imageListCommon:ArrayList<Tree>,imageListUncommon:ArrayList<Tree>,imageListLegendary:ArrayList<Tree>){
+    private suspend fun updateOnMainThread(imageListRare:ArrayList<Tree>,imageListCommon:ArrayList<Tree>,imageListUncommon:ArrayList<Tree>,imageListLegendary:ArrayList<Tree>,imageList:ArrayList<Tree>){
+
         withContext(Main){
             imageToShowRare.value = imageListRare
             imageToShowCommon.value = imageListCommon
             imageToShowUncommon.value = imageListUncommon
             imageToShowLegendary.value = imageListLegendary
+            imageToShowAll.value = imageList
         }
     }
 

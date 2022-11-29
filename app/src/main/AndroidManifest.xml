@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FocusApp"
         tools:targetApi="31">
+
+        <activity
+            android:name=".ui.collection.Game.LaunchGame"
+            android:exported="true"
+            android:theme="@style/Theme.FocusApp.noActionBar"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="landscape">
+        </activity>
+
+
         <activity
             android:name=".ui.login.ActivitySignup"
             android:exported="false">
@@ -52,11 +63,7 @@
             android:exported="false">
         </activity>
 
-        <activity
-            android:screenOrientation="landscape"
-            android:name=".ui.collection.Game.LaunchGame"
-            android:exported="false">
-        </activity>
+
 
 
 

@@ -4,6 +4,7 @@ class Tree {
     var treeName:String ?= null
     var image:Int ?= null
     var shortIntro:String ?= null
+    var id:Int ?= null
 
     // rank 0 ~ 3
     // 0 - legendary
@@ -15,11 +16,12 @@ class Tree {
     // control user lock or unlock
     var status:Boolean
 
-    constructor(name:String, image:Int){
+    constructor(name:String, image:Int, id:Int){
         this.image = image
         this.treeName = name
         this.rank = 3
         this.status = false
+        this.id = id
     }
 
     fun unLock(){

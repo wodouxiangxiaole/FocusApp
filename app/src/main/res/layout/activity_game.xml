@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xd.focusapp.ui.collection.Game.LaunchGame">
+    tools:context="com.xd.focusapp.ui.collection.Game.LaunchGame"
 
-    <com.xd.focusapp.ui.collection.Game.Game
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    >
+
+
 
 </RelativeLayout>

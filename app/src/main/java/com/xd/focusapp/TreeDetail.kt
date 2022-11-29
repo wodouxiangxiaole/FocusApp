@@ -2,6 +2,7 @@ package com.xd.focusapp
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +38,9 @@ class TreeDetail: AppCompatActivity(){
         name.text = "Name: ${intent.getStringExtra("name")}"
 
 
-
+        findViewById<Button>(R.id.back).setOnClickListener{
+            finish()
+        }
 
     }
 }

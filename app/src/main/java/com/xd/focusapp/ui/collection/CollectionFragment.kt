@@ -38,12 +38,13 @@ class CollectionFragment : Fragment() {
     private lateinit var commonFragment:CommonFragment
     private lateinit var unCommonFragment: UncommonFragment
     private lateinit var legendaryFragment: LegendaryFragment
+    private lateinit var allFragment: AllFragment
 
     private lateinit var fragments:ArrayList<Fragment>
     private lateinit var tabLayout:TabLayout
     private lateinit var viewPager2: ViewPager2
     private lateinit var myFragmentStateAdapter: MyFragmentStateAdapter
-    private val tabTitles = arrayOf("COMMON", "UNCOMMON", "RARE", "LEGENDARY")
+    private val tabTitles = arrayOf("ALL", "COMMON", "UNCOMMON", "RARE", "LEGENDARY")
     private lateinit var tabConfigurationStrategy: TabLayoutMediator.TabConfigurationStrategy
     private lateinit var tabLayoutMediator: TabLayoutMediator
 
@@ -62,11 +63,15 @@ class CollectionFragment : Fragment() {
         commonFragment = CommonFragment()
         unCommonFragment = UncommonFragment()
         legendaryFragment = LegendaryFragment()
+        allFragment = AllFragment()
+
         fragments = ArrayList()
+        fragments.add(allFragment)
         fragments.add(commonFragment)
         fragments.add(unCommonFragment)
         fragments.add(rareFragment)
         fragments.add(legendaryFragment)
+
 
         tabLayout = root.findViewById(R.id.tab)
         viewPager2 = root.findViewById(R.id.viewpager)

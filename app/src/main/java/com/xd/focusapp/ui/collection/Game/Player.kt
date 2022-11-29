@@ -3,11 +3,7 @@ package com.xd.focusapp.ui.collection.Game
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import androidx.core.app.NotificationCompat.getColor
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.res.ResourcesCompat.getColor
-import com.google.android.material.color.MaterialColors.getColor
 import com.xd.focusapp.R
 
 class Player(context: Context, positionX:Double, positionY:Double, radius:Double) {
@@ -28,9 +24,12 @@ class Player(context: Context, positionX:Double, positionY:Double, radius:Double
         paint.color = color
 
     }
+
     fun draw(canvas: Canvas) {
-        println("debug: draw circle called()")
+        // println("debug: draw circle called()")
+
         canvas.drawCircle(positionX.toFloat(), positionY.toFloat(), radius.toFloat(), paint)
+
     }
 
     fun update() {

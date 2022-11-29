@@ -95,9 +95,18 @@ class SpinnerFragment : Fragment() {
                 // use shared preference to pass data
 
                 Toast.makeText(activity,"You got ${sectors[3-res]}",Toast.LENGTH_SHORT).show()
+                val image = collectionViewModel.unlock(res)
+                val dialog = SpinnerFinishDialog()
+                val bundle = Bundle()
+                dialog.arguments = bundle
+
+                bundle.putInt("image", image)
+
+                dialog.show(parentFragmentManager, "dialog")
 
 
-                collectionViewModel.unlock(res)
+
+
 
             }
 

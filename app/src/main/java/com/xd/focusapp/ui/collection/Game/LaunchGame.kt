@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.xd.focusapp.R
 
 class LaunchGame: AppCompatActivity() {
+    private lateinit var game:Game
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // remove notification bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-        setContentView(Game(this))
+        game = Game(this)
+        setContentView(game)
     }
 }

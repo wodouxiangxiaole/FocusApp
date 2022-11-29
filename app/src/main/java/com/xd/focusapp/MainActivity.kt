@@ -3,6 +3,7 @@ package com.xd.focusapp
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract.Data
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -48,6 +49,13 @@ class MainActivity : AppCompatActivity() {
     fun click(view: View){
         val intent = Intent(this, LaunchGame::class.java)
         startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
     }
 
 
