@@ -3,12 +3,13 @@ package com.xd.focusapp.ui.focus
 import android.R
 import android.app.ProgressDialog.show
 import android.app.TimePickerDialog
-import android.content.Context
+import android.content.*
 import android.content.Context.LAYOUT_INFLATER_SERVICE
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.IBinder
+import android.os.Messenger
+import android.os.PowerManager.PARTIAL_WAKE_LOCK
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,27 @@ class FocusFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /** Messenger for communicating with the service.  */
+    private var mService: Messenger? = null
+
+    /** Flag indicating whether we have called bind on the service.  */
+    private var bound: Boolean = false
+
+    /**
+     * Class for interacting with the main interface of the service.
+     */
+    private val mConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            mService = Messenger(service)
+            bound = true
+        }
+
+        override fun onServiceDisconnected(className: ComponentName) {
+            mService = null
+            bound = false
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,37 +108,45 @@ class FocusFragment : Fragment() {
             var timeInMillSec = (timeInMin?.times(60) ?: 0 ) * 1000
 
             var countDown = binding.countDown
-            if (timer != null) {
-                timer?.cancel()
+
+            val intent: Intent = Intent (requireActivity(), FocusService::class.java)
+            intent.putExtra("timeInMillSec",timeInMillSec)
+            requireActivity().startService(intent)
+
+            Intent(requireActivity(),FocusService::class.java).also { intent ->
+                requireActivity().bindService(intent,mConnection,Context.BIND_AUTO_CREATE)
             }
+//            if (timer != null) {
+//                timer?.cancel()
+//            }
 
-            timer = object: CountDownTimer(timeInMillSec.toLong(), 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    var totalTimeInSec = Math.ceil((millisUntilFinished / 1000).toDouble())
-                    var secDisplay = "00"
-                    var minDisplay = "00"
-                    var hourDisplay = "00"
-                    if (totalTimeInSec >= 60) {
-                        secDisplay = ((totalTimeInSec % 60).toInt()).toString()
-                        minDisplay = ((totalTimeInSec / 60).toInt()).toString()
-                        var timeInMin = totalTimeInSec / 60
-
-                        if (timeInMin >= 60) {
-                            minDisplay = ((timeInMin % 60).toInt()).toString()
-                            hourDisplay = ((timeInMin / 60).toInt()).toString()
-                        }
-                    } else {
-                        secDisplay = (totalTimeInSec.toInt()).toString()
-                    }
-
-                    countDown.text = String.format("%s:%s:%s", hourDisplay, minDisplay, secDisplay)
-                }
-
-                override fun onFinish() {
-                    countDown.text = "DONE"
-                }
-            }
-            timer?.start()
+//            timer = object: CountDownTimer(timeInMillSec.toLong(), 1000) {
+//                override fun onTick(millisUntilFinished: Long) {
+//                    var totalTimeInSec = Math.ceil((millisUntilFinished / 1000).toDouble())
+//                    var secDisplay = "00"
+//                    var minDisplay = "00"
+//                    var hourDisplay = "00"
+//                    if (totalTimeInSec >= 60) {
+//                        secDisplay = ((totalTimeInSec % 60).toInt()).toString()
+//                        minDisplay = ((totalTimeInSec / 60).toInt()).toString()
+//                        var timeInMin = totalTimeInSec / 60
+//
+//                        if (timeInMin >= 60) {
+//                            minDisplay = ((timeInMin % 60).toInt()).toString()
+//                            hourDisplay = ((timeInMin / 60).toInt()).toString()
+//                        }
+//                    } else {
+//                        secDisplay = (totalTimeInSec.toInt()).toString()
+//                    }
+//
+//                    countDown.text = String.format("%s:%s:%s", hourDisplay, minDisplay, secDisplay)
+//                }
+//
+//                override fun onFinish() {
+//                    countDown.text = "DONE"
+//                }
+//            }
+//            timer?.start()
         }
 
         return root

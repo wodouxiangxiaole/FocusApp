@@ -15,6 +15,11 @@ class Database {
     // private val host = "10.0.2.2"
 
     // For Google Cloud Postgresql
+
+    // private final String host = "35.44.16.169";
+    // For Local PostgreSQL
+
+    // Google cloud PostgresSQL login information
     private val host = "104.198.169.251"
     private val database = "focus_app_db"
     private val port = 5432

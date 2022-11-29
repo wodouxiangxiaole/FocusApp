@@ -19,6 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FocusApp"
         tools:targetApi="31">
+        <service
+            android:name=".FocusService"
+            android:enabled="true"
+            android:exported="true">
+
+        </service>
+
         <activity
             android:name=".GoogleLoginActivity"
             android:exported="false">
@@ -70,7 +77,8 @@
         </activity>
         <activity
             android:name=".TreeDetail"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
