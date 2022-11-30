@@ -40,7 +40,7 @@ class SearchAdapter(private val context: Context, private val users:List<User> )
             val intent = Intent(context, ViewProfileActivity::class.java)
             intent.putExtra("user_name",user.name)
             intent.putExtra("user_id",user.uid)
-            intent.putExtra("user_icon",user.icon)
+//            intent.putExtra("user_icon",user.icon)
             intent.putExtra("user_credits",user.credits)
 
             context.startActivities(arrayOf(intent))

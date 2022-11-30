@@ -103,14 +103,14 @@ class SettingFragment : Fragment() {
         settingListView.setOnItemClickListener{ parent: AdapterView<*>, view: View, position: Int, id: Long ->
             if(settingOptions[position]=="Friends"){
                 val intent = Intent(requireActivity(), FriendsMainPage::class.java)
-                val bundle = Bundle()
-
-                for(entry in user.entries){
-                    bundle.putString(entry.key,entry.value)
-               //     println("debug: entry.key,entry.value, ${entry.key},${entry.value}")
-                }
-
-                intent.putExtra("user",bundle)
+//                val bundle = Bundle()
+//
+//                for(entry in user.entries){
+//                    bundle.putString(entry.key,entry.value)
+//               //     println("debug: entry.key,entry.value, ${entry.key},${entry.value}")
+//                }
+//
+//                intent.putExtra("user",bundle)
                 startActivity(intent)
             }
         }
