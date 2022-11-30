@@ -1,13 +1,13 @@
 package com.xd.focusapp.ui.focus
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 class FocusViewModel : ViewModel() {
-    val timer = MutableLiveData<Int>()
+    val timer_set = MutableLiveData<Int>()
+    val timer_countDown = MutableLiveData<String>()
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is Focus Fragment"

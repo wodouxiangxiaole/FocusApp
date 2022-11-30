@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.xd.focusapp.databinding.ActivityMainBinding
 import com.xd.focusapp.ui.collection.CollectionViewModel
 import com.xd.focusapp.ui.collection.Game.LaunchGame
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    lateinit var auth: FirebaseAuth
+
     private lateinit var menu:Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +36,12 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
+        val email = intent.getStringExtra("email")
+        val name = intent.getStringExtra("name")
+        val id = intent.getStringExtra("id")
+        val idToken = intent.getStringExtra("idToken")
 
         db = Database()
         //***************************************************************//
@@ -44,6 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         // for test purpose
         val query = "select * from users where uid = 1;"
+        //val uemail = intent.getStringExtra("uemail")
         user = db.getUser(query)
 
         val sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)

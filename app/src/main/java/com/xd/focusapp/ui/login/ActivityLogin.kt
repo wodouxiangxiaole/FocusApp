@@ -51,9 +51,12 @@ open class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val db = Database()
+        val db = Database()
 //
 //        // test
+         val query = "select * from users"
+         db.getAllUser(query)
+        // test
 //         val query = "select * from users"
 //         db.getAllUser(query)
 
@@ -180,7 +183,7 @@ open class ActivityLogin : AppCompatActivity() {
     private fun sendUserToNextActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.putExtra("uemail",inputEmail.text.toString())
+        intent.putExtra("email",inputEmail.text.toString())
         startActivity(intent)
     }
 

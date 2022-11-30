@@ -32,7 +32,7 @@ class TimePickerFragment : DialogFragment(), DialogInterface.OnClickListener  {
 //            editor?.commit()
             var timerResult = input.text.toString()
             var time = Integer.parseInt(timerResult)
-            focusViewModel.timer.value = time
+            focusViewModel.timer_set.value = time
             println("DEBUGG timer set " + timerResult)
 
             val sharedPreference: SharedPreferences? = requireActivity().getSharedPreferences("FocusApp", Context.MODE_PRIVATE)

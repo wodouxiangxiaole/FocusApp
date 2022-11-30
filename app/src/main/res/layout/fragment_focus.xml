@@ -56,10 +56,11 @@
             android:ems="10"
             android:fontFamily="monospace"
             android:onClick="setTimer"
-            android:text="01:23:00"
+            android:text="00:00:00"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="48sp" />
+
 
         <Button
             android:id="@+id/timerStartButton"
