@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.widget.ImageView
 import android.widget.TextView
+import com.xd.focusapp.Database
 import com.xd.focusapp.R
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -28,7 +29,7 @@ class ViewProfileActivity : AppCompatActivity() {
         user.name= intent.extras?.getString("user_name").toString()
         user.uid= intent.extras?.getString("user_id").toString()
         user.credits= intent.extras?.getString("user_credits").toString()
-        user.icon= intent.extras?.getString("user_icon").toString()
+    //    user.icon= intent.extras?.getString("user_icon").toString()
 
 
         val usernameview:TextView=findViewById(R.id.Profile_Name2)
@@ -37,6 +38,12 @@ class ViewProfileActivity : AppCompatActivity() {
 
         usernameview.text = user.name
         useridview.text = user.uid
+
+        val db = Database()
+        val query = "select * from users where uid = ${user.uid};"
+        val queryuser = db.getUser(query)
+        user.icon= queryuser["icon"].toString()
+
 
         if(user.icon!=null){
             val encodedImage = user.icon

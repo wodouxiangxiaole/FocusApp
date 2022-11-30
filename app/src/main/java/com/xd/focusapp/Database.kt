@@ -89,7 +89,6 @@ class Database {
     }
 
     fun updateProfileImage(query:String) {
-
         CoroutineScope(IO).launch{
             try {
                 val stat: Statement = connection!!.createStatement()
