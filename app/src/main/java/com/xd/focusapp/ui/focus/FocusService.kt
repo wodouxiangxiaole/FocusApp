@@ -2,22 +2,27 @@ package com.xd.focusapp.ui.focus
 
 import android.app.Service
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Binder
 import android.os.CountDownTimer
 import android.os.IBinder
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
+
 
 class FocusService : Service() {
     private var timeInMillSec: Int = 0
-    private lateinit var timeDisplay: String
+
+    var timeDisplay: String = ""
     // Binder given to clients
     private val binder = LocalBinder()
+    lateinit var timerCountDownLiveData: MutableLiveData<String>
+    var isInFocus: Boolean = false
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         println("debuggg onStartCommand")
         timeInMillSec = intent?.getIntExtra("timeInMillSec",0)!!
-
+        timerCountDownLiveData = MutableLiveData<String>()
         var timer: CountDownTimer? = null
 
         if (timer != null) {
@@ -44,13 +49,20 @@ class FocusService : Service() {
                 }
 
                 timeDisplay = String.format("%s:%s:%s", hourDisplay, minDisplay, secDisplay)
+                println("debuggg livedata set " + timeDisplay)
 
+                timerCountDownLiveData.value = timeDisplay
             }
 
             override fun onFinish() {
+                timerCountDownLiveData.value = "DONE"
+                isInFocus = false
             }
+
+
         }
         timer?.start()
+        isInFocus = true
 
         return super.onStartCommand(intent, flags, startId)
 

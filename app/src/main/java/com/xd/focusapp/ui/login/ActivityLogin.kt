@@ -56,6 +56,9 @@ open class ActivityLogin : AppCompatActivity() {
 //        // test
 //         val query = "select * from users"
 //         db.getAllUser(query)
+        // test
+//         val query = "select * from users"
+//         db.getAllUser(query)
 
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
