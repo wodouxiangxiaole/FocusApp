@@ -51,11 +51,11 @@ open class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        val db = Database()
+        val db = Database()
 //
 //        // test
-//         val query = "select * from users"
-//         db.getAllUser(query)
+         val query = "select * from users"
+         db.getAllUser(query)
         // test
 //         val query = "select * from users"
 //         db.getAllUser(query)

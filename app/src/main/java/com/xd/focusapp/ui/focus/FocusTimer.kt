@@ -1,25 +1,25 @@
 package com.xd.focusapp.ui.focus
 
-import android.R.attr.host
-import android.app.*
+import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.graphics.Color
-import android.os.Bundle
-import android.os.IBinder
+import android.os.*
+import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import com.xd.focusapp.R
+import java.time.Instant
 
 
 class FocusTimer: AppCompatActivity() {
@@ -35,7 +35,7 @@ class FocusTimer: AppCompatActivity() {
 
     val CHANNEL_ID = "channelID"
     val CHANNEL_NAME = "channelName"
-    val NOTIF_ID = 0
+    val NOTIFY_ID = 0
     /**
      * Class for interacting with the main interface of the service.
      */
@@ -53,6 +53,9 @@ class FocusTimer: AppCompatActivity() {
         }
 
         override fun onServiceDisconnected(className: ComponentName) {
+            /** This is called when the connection with the service has been
+             *  unexpectedly disconnected -- that is, its process crashed.
+             */
             mService = null
             bound = false
         }
@@ -81,6 +84,10 @@ class FocusTimer: AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        bindService(
+            Intent(this, FocusService::class.java), mConnection,
+            BIND_AUTO_CREATE
+        )
         // Bind to LocalService
         Intent(this, FocusService::class.java).also { intent ->
             appContext = this.getApplicationContext() as Application
@@ -104,18 +111,16 @@ class FocusTimer: AppCompatActivity() {
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-//        Toast.makeText(this, "Go back immediately to save your plant", Toast.LENGTH_LONG).show()
-//        Log.i("Home button Pressed!", "Yes")
         if (mService?.isInFocus == true) {
-            createNotifChannel()
+            createNotifyChannel()
 
-            val intent=Intent(this,FocusTimer::class.java)
+            val intent = Intent(this, FocusTimer::class.java)
             val pendingIntent = TaskStackBuilder.create(this).run {
                 addNextIntentWithParentStack(intent)
                 getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
             }
 
-            val notif = NotificationCompat.Builder(this,CHANNEL_ID)
+            val notify = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Focus App")
                 .setContentText("Go back immediately to save your plant")
                 .setSmallIcon(R.drawable.flower_drawing)
@@ -123,15 +128,17 @@ class FocusTimer: AppCompatActivity() {
                 .setContentIntent(pendingIntent)
                 .build()
 
+            val notifyManger = NotificationManagerCompat.from(this)
+            notifyManger.notify(NOTIFY_ID, notify)
 
-            val notifManger = NotificationManagerCompat.from(this)
-            notifManger.notify(NOTIF_ID,notif)
+            // message service to take a note on the time
+            mService?.killPlantTimer = Instant.now().epochSecond
+
+            finish()
         }
-
-        finish()
     }
 
-    private fun createNotifChannel() {
+    private fun createNotifyChannel() {
         val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT).apply {
             lightColor = Color.BLUE
             enableLights(true)
