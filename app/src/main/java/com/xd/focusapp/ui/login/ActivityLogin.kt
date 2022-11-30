@@ -54,8 +54,8 @@ open class ActivityLogin : AppCompatActivity() {
         val db = Database()
 //
 //        // test
-         val query = "select * from users"
-         db.getAllUser(query)
+//         val query = "select * from users"
+//         db.getAllUser(query)
         // test
 //         val query = "select * from users"
 //         db.getAllUser(query)
