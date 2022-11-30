@@ -19,9 +19,16 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:src="@drawable/image1"
         android:id="@+id/image_show"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/points"
+
+        android:textAlignment="center"/>
 
 
 

@@ -85,8 +85,10 @@ class CollectionViewModel : ViewModel() {
 
 
     // for test purpose
-    val uid = 1
+    var uid = 1
     private lateinit var db:Database
+
+
 
 
     init {
@@ -96,8 +98,12 @@ class CollectionViewModel : ViewModel() {
     fun Task(){
         CoroutineScope(IO).launch {
 
+
             db = Database()
             val idList = db.getUnlockedId(uid)
+
+
+
 
             imageList.clear()
 
@@ -127,6 +133,8 @@ class CollectionViewModel : ViewModel() {
             imageList[18].setRank(3)
             imageList[19].setRank(2)
             imageList[20].setRank(2)
+
+
 
             for(i in idList.indices){
                 imageList[idList[i]].unLock()

@@ -1,5 +1,6 @@
 package com.xd.focusapp
 
+import android.content.Context
 import android.util.MutableInt
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +11,7 @@ import java.sql.DriverManager
 import java.sql.Statement
 
 
-class Database {
+class Database() {
     private var connection: Connection? = null
 
     // For Local postgresSQL
@@ -29,6 +30,7 @@ class Database {
     private val pass = "cmpt362"
     private var url = "jdbc:postgresql://%s:%d/%s"
     private var status = false
+
 
     init {
         url = String.format(url, this.host, this.port, this.database)
@@ -130,24 +132,10 @@ class Database {
         return map
     }
 
-    fun getAllUser(query: String){
-        CoroutineScope(IO).launch {
-            try{
-                val stat:Statement = connection!!.createStatement()
-                val rs = stat.executeQuery(query)
-                while(rs.next()) {
-//                    println("debug111: ${rs.getString(1)}, ${rs.getString(2)}")
-                }
-            }
-            catch (e:Exception){
-                e.printStackTrace()
 
-            }
-        }
-     }
-
-    fun getUnlockedId(uid: Int): ArrayList<Int>{
+    fun getUnlockedId(uid:Int): ArrayList<Int>{
         var id = ArrayList<Int>()
+
         try{
             val stat:Statement = connection!!.createStatement()
             val rs = stat.executeQuery("SELECT * FROM users_collect_tree WHERE uid = $uid")

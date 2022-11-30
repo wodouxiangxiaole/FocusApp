@@ -1,6 +1,8 @@
 package com.xd.focusapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.ContactsContract.Data
 import android.view.Menu
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var menu:Menu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,9 +35,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = Database()
-        val uemail = intent.getStringExtra("uemail")
-        val query = "select * from users where email = ${uemail};"
+        //***************************************************************//
+        //***************************************************************//
+//        val uemail = intent.getStringExtra("uemail")
+//        val query = "select * from users where email = ${uemail};"
+        //***************************************************************//
+        //***************************************************************//
+
+        // for test purpose
+        val query = "select * from users where uid = 1;"
         user = db.getUser(query)
+
+        val sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
+
+        var editor: SharedPreferences.Editor = sp.edit().apply {
+            putString("name", user["user_name"])
+            putString("email", user["email"])
+            putString("credits", user["credits"])
+            putString("uid", user["uid"])
+        }
+        editor.commit()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -65,18 +86,23 @@ class MainActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
 
-        val dbViewModel =
-            ViewModelProvider(this).get(DatabaseViewModel::class.java)
+        this.menu = menu!!
 
-        // change to proper uid later on
-//        dbViewModel.db.getCredits(1)
-
-        // find menu item and replace item title to current credits
-//        menu!!.findItem(R.id.credits).title = dbViewModel.db.getCredits(1)
-
+        updateMenuTitles()
 
         return true
     }
+
+    fun updateMenuTitles(){
+        val sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
+
+        // change to proper uid later on
+        // find menu item and replace item title to current credits
+        menu!!.findItem(R.id.credits).title = sp.getString("credits", "")
+
+    }
+
+
 
 
 }

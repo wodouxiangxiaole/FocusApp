@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import com.example.androidstudio2dgamedevelopment.GameLoop
 
 class Game(context: Context): SurfaceView(context), SurfaceHolder.Callback{
     private var joystick: Joystick ?= null
@@ -49,18 +48,18 @@ class Game(context: Context): SurfaceView(context), SurfaceHolder.Callback{
 
     override fun surfaceDestroyed(p0: SurfaceHolder) {
         println("debug: surfaceCreated() called")
-//        var retry = true
-//        while(retry){
-//            try{
-//                thread.startLoop()
-//                thread.join()
-//            }
-//            catch (e: Exception){
-//                e.printStackTrace()
-//            }
-//
-//            retry = false
-//        }
+        var retry = true
+        while(retry){
+            try{
+                thread.startLoop()
+                thread.join()
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
+
+            retry = false
+        }
     }
 
 
@@ -80,21 +79,10 @@ class Game(context: Context): SurfaceView(context), SurfaceHolder.Callback{
 //
 //    override fun onDraw(canvas: Canvas) {
 //        super.onDraw(canvas)
-//
-//
+//        player!!.draw(canvas)
+//        joystick!!.draw(canvas)
 //    }
-
-//    override fun draw(canvas: Canvas?) {
-//        super.draw(canvas)
 //
-//        // Draw game objects
-//        player!!.draw(canvas!!)
-//
-//        // Draw game panels
-//        joystick!!.draw(canvas!!)
-//
-//
-//    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.xd.focusapp.ui.spinner
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +11,16 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.xd.focusapp.MainActivity
 import com.xd.focusapp.R
 import com.xd.focusapp.databinding.FragmentSpinnerBinding
-import com.xd.focusapp.ui.collection.CollectionFragment
 import com.xd.focusapp.ui.collection.CollectionViewModel
 import com.xd.focusapp.ui.collection.MyDialog
-import com.xd.focusapp.ui.collection.Tree
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class SpinnerFragment : Fragment() {
 
@@ -59,13 +58,36 @@ class SpinnerFragment : Fragment() {
         wheel = root.findViewById(R.id.wheel)
 
         spin_button.setOnClickListener {
-            if (!isSpinning) {
-                spin()
-                isSpinning = true
+            // if credits > 120 ==> can spin
+            val sp = this.activity?.getSharedPreferences("userSp", Context.MODE_PRIVATE)
+            var credits = sp?.getString("credits", "")!!.toInt()
+            if(credits >= 120){
+                credits -= 120
+                val bundle = Bundle()
+                bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.LOCK_DIALOG)
+
+                var editor: SharedPreferences.Editor = sp.edit().apply {
+                    putString("credits", credits.toString())
+                }
+                editor.commit()
+
+                (activity as MainActivity?)?.updateMenuTitles()
+                if (!isSpinning) {
+                    spin()
+                    isSpinning = true
+                }
             }
+            else{
+                val bundle = Bundle()
+                bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.CREDITS_NOT_ENOUGH)
+            }
+
+
+
         }
         return root
     }
+
 
     fun spin(){
         var randomDegree = Random().nextInt(360)
@@ -124,12 +146,6 @@ class SpinnerFragment : Fragment() {
                 dialog.arguments = bundle
 
                 dialog.show(parentFragmentManager, "dialog")
-
-
-
-
-
-
 
 
 

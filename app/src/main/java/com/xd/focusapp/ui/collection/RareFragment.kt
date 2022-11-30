@@ -63,7 +63,10 @@ class RareFragment:Fragment() {
                 startActivity(intent)
             }
             else{
+                val bundle = Bundle()
+                bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.LOCK_DIALOG)
                 val dialog = MyDialog()
+                dialog.arguments = bundle
                 dialog.show(parentFragmentManager, "alert")
             }
 

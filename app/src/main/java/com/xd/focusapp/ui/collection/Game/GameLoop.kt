@@ -1,103 +1,78 @@
-package com.example.androidstudio2dgamedevelopment
+package com.xd.focusapp.ui.collection.Game
 
 import android.graphics.Canvas
-import android.util.Log
 import android.view.SurfaceHolder
-import com.xd.focusapp.ui.collection.Game.Game
 
-class GameLoop(private val game: Game, private val surfaceHolder: SurfaceHolder) : Thread() {
-    private var isRunning = false
-    var averageUPS = 0.0
-        private set
-    var averageFPS = 0.0
-        private set
+class GameLoop(game:Game, surfaceHolder: SurfaceHolder):Thread() {
+    private var isRunning:Boolean = false
+    private var surfaceHolder: SurfaceHolder
+    private var game:Game
+    private val targetFPS = 50
 
-    fun startLoop() {
-        Log.d("GameLoop.java", "startLoop()")
+
+    init{
+        this.surfaceHolder = surfaceHolder
+        this.game = game
+    }
+
+    fun startLoop(){
         isRunning = true
         start()
     }
 
-    override fun run() {
-        Log.d("GameLoop.java", "run()")
+    fun endLoop(){
+        isRunning = false
+    }
+
+    override fun run(){
         super.run()
 
-        // Declare time and cycle count variables
-        var updateCount = 0
-        var frameCount = 0
+        var canvas:Canvas
         var startTime: Long
-        var elapsedTime: Long
-        var sleepTime: Long
+        var timeMillis: Long
+        var waitTime: Long
+        val targetTime = (1000 / targetFPS).toLong()
 
-        // Game loop
-        var canvas: Canvas? = null
-        startTime = System.currentTimeMillis()
-        while (isRunning) {
-
-            // Try to update and render game
+        while(isRunning){
+            startTime = System.nanoTime()
             try {
                 canvas = surfaceHolder.lockCanvas()
-                synchronized(surfaceHolder) {
+
+                // use synchronize method to lock the canvas
+                // critical section
+                synchronized(surfaceHolder){
                     game.update()
-                    updateCount++
                     game.draw(canvas)
                 }
-            } catch (e: IllegalArgumentException) {
+
+                // unlock canvas
+                surfaceHolder.unlockCanvasAndPost(canvas)
+            }
+            catch (e:Exception){
                 e.printStackTrace()
-            } finally {
-                if (canvas != null) {
-                    try {
-                        surfaceHolder.unlockCanvasAndPost(canvas)
-                        frameCount++
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+            }
+
+            // get time slot
+            timeMillis = (System.nanoTime() - startTime) / 1000000
+
+            // we need to wait this time and then refresh the canvas
+            waitTime = targetTime - timeMillis
+
+            // println("time: ${timeMillis}")
+
+            try{
+                if(waitTime > 0){
+                    sleep(waitTime)
                 }
+
+            }
+            catch (e: Exception){
+                e.printStackTrace()
             }
 
-            // Pause game loop to not exceed target UPS
-            elapsedTime = System.currentTimeMillis() - startTime
-            sleepTime = (updateCount * UPS_PERIOD - elapsedTime).toLong()
-            if (sleepTime > 0) {
-                try {
-                    sleep(sleepTime)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-            }
 
-            // Skip frames to keep up with target UPS
-            while (sleepTime < 0 && updateCount < MAX_UPS - 1) {
-                game.update()
-                updateCount++
-                elapsedTime = System.currentTimeMillis() - startTime
-                sleepTime = (updateCount * UPS_PERIOD - elapsedTime).toLong()
-            }
-
-            // Calculate average UPS and FPS
-            elapsedTime = System.currentTimeMillis() - startTime
-            if (elapsedTime >= 1000) {
-                averageUPS = updateCount / (1E-3 * elapsedTime)
-                averageFPS = frameCount / (1E-3 * elapsedTime)
-                updateCount = 0
-                frameCount = 0
-                startTime = System.currentTimeMillis()
-            }
         }
+
     }
 
-    fun stopLoop() {
-        Log.d("GameLoop.java", "stopLoop()")
-        isRunning = false
-        try {
-            join()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-    }
-
-    companion object {
-        const val MAX_UPS = 30.0
-        private const val UPS_PERIOD = 1E+3 / MAX_UPS
-    }
 }

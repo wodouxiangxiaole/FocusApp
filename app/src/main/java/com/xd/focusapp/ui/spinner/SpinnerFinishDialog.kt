@@ -2,11 +2,15 @@ package com.xd.focusapp.ui.spinner
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
+import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.xd.focusapp.MainActivity
 import com.xd.focusapp.R
 
 class SpinnerFinishDialog: DialogFragment() {
@@ -14,10 +18,10 @@ class SpinnerFinishDialog: DialogFragment() {
         var REPEAT_KEY = 100
         var NORMAL_KEY = 200
 
-        var COMMON = 200
-        var UNCOMMON = 400
-        var RARE = 800
-        var LEGENDARY = 1600
+        var COMMON = 10
+        var UNCOMMON = 20
+        var RARE = 30
+        var LEGENDARY = 50
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -40,6 +44,16 @@ class SpinnerFinishDialog: DialogFragment() {
             val points = bundle.getInt("points")
 
             // update credits in database
+            val sp = this.activity?.getSharedPreferences("userSp", Context.MODE_PRIVATE)
+            var credits = sp?.getString("credits", "")!!.toInt()
+            credits += points
+            var editor: SharedPreferences.Editor = sp.edit().apply {
+                putString("credits", credits.toString())
+            }
+            val show_points = view.findViewById<TextView>(R.id.points)
+            show_points.text = "Transfer to ${points} credits"
+            editor.commit()
+
         }
 
         builder.setPositiveButton("ok"){ dialog, which ->
@@ -48,8 +62,12 @@ class SpinnerFinishDialog: DialogFragment() {
 
         dialog = builder.create()
 
-
-
         return dialog
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        (activity as MainActivity?)?.updateMenuTitles()
+
     }
 }
