@@ -42,7 +42,7 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var settingOptions: Array<String>
     private lateinit var user:MutableMap<String,String>
-    private val uid = 3
+    private val uid = 4
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +50,7 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         settingViewModel =
-            ViewModelProvider(this).get(SettingViewModel::class.java)
+            ViewModelProvider(this)[SettingViewModel::class.java]
 
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -79,16 +79,15 @@ class SettingFragment : Fragment() {
 
         val query = "select * from users where uid = ${uid};"
         user = db.getUser(query)
-        println("debug: ${user["email"]},${user["credits"]},${user["uid"]},${user["icon"]},${user["user_name"]}")
 
         userIDTextView = binding.ProfileUserID
         nameTextView = binding.ProfileName
 
         userIDTextView.text = user["uid"]
         nameTextView.text = user["user_name"]
+        // show icon
         if(user["icon"]!=null){
             val encodedImage = user["icon"]
-            println("debug: icon:$encodedImage")
             val stringImageToByte = Base64.decode(encodedImage, Base64.DEFAULT)
             val profileBitmap = BitmapFactory.decodeByteArray(stringImageToByte,
                 0,stringImageToByte.size)

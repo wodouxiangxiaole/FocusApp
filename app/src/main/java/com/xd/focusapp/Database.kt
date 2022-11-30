@@ -2,6 +2,7 @@ package com.xd.focusapp
 
 import android.util.MutableInt
 import androidx.lifecycle.MutableLiveData
+import com.xd.focusapp.ui.setting.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -99,7 +100,32 @@ class Database {
         }
     }
 
+    fun searchPeople(query:String):MutableList<User>{
+        val userList = mutableListOf<User>()
+        val a1 = Thread  {
+            try {
+                val stat: Statement = connection!!.createStatement()
+                val rs = stat.executeQuery(query)
+                while(rs.next()) {
+                    val newUser = User()
+                    newUser.name = rs.getString(6)
+                    if(rs.getString(4)!=null){
+                        newUser.icon = rs.getString(4)
+                    }
+                    newUser.uid=rs.getString(3)
+                    newUser.credits=rs.getString(2)
+                    userList.add(newUser)
+                 //   println("debug111: ${rs.getString(6)}")
+                }
 
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        a1.start()
+        a1.join()
+        return userList
+    }
 
     fun getUser(query: String):MutableMap<String,String>{
         val map = mutableMapOf<String,String>()
@@ -110,9 +136,13 @@ class Database {
                 val rs = stat.executeQuery(query)
                 while(rs.next()) {
                     map["email"] = rs.getString(1)
-                    map["credits"] = rs.getString(2)
+                    if(rs.getString(2)!=null){
+                        map["credits"] = rs.getString(2)
+                    }
                     map["uid"] = rs.getString(3)
-                    map["icon"] = rs.getString(4)
+                    if(rs.getString(4)!=null){
+                        map["icon"] = rs.getString(4)
+                    }
                     map["pwd"] = rs.getString(5)
                     map["user_name"]=rs.getString(6)
                     map["fb_uid"]=rs.getString(7)
