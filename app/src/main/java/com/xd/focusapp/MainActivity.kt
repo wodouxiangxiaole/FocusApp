@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.xd.focusapp.databinding.ActivityMainBinding
 import com.xd.focusapp.ui.collection.CollectionViewModel
 import com.xd.focusapp.ui.collection.Game.LaunchGame
@@ -24,15 +25,23 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
+        val email = intent.getStringExtra("email")
+        val name = intent.getStringExtra("name")
+        val id = intent.getStringExtra("id")
+        val idToken = intent.getStringExtra("idToken")
+
         db = Database()
-        val uemail = intent.getStringExtra("uemail")
-        val query = "select * from users where email = ${uemail};"
+        //val uemail = intent.getStringExtra("uemail")
+        val query = "select * from users where email = ${email};"
         user = db.getUser(query)
 
         val navView: BottomNavigationView = binding.navView
