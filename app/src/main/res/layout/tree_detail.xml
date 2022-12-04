@@ -24,8 +24,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/introduction"
-        android:text="Introduction"
+        android:id="@+id/source"
         android:textSize="16dp"
         android:layout_margin="10dp"
         android:textColor="#000000"

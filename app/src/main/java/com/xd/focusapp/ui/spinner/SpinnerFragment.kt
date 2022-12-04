@@ -134,7 +134,9 @@ class SpinnerFragment : Fragment() {
                 // use shared preference to pass data
 
                 Toast.makeText(activity,"You got ${sectors[3-res]}",Toast.LENGTH_SHORT).show()
-                val plant = collectionViewModel.unlock(res)
+
+                // GET PLANT FROM SPINNER
+                val plant = collectionViewModel.unlock(res, 1)
 
                 val dialog = SpinnerFinishDialog()
                 val bundle = Bundle()

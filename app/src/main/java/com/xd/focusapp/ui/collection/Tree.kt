@@ -8,6 +8,9 @@ class Tree {
 
     var toPoints:Boolean = false
 
+    // 0 ==> timer |||| 1 ==> spinner
+    var whereGetIt:Int ?= null
+
     // rank 0 ~ 3
     // 0 - legendary
     // 1 - rare
@@ -26,11 +29,13 @@ class Tree {
         this.id = id
     }
 
-    fun unLock(): Boolean{
+    fun unLock(spinnerOrTimer: Int): Boolean{
         return if(this.status){
             this.toPoints = true
             false
         } else{
+            // the user first unlock plant
+            this.whereGetIt = spinnerOrTimer
             this.status = true
             true
         }

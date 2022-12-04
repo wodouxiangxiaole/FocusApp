@@ -99,6 +99,7 @@ class CollectionViewModel(param: String?) : ViewModel() {
         CoroutineScope(IO).launch {
             val idList = db.getUnlockedId()
 
+
             imageList.clear()
 
             for (i in 0..images.size - 1) {
@@ -130,9 +131,11 @@ class CollectionViewModel(param: String?) : ViewModel() {
 
 
 
-            for(i in idList.indices){
-                imageList[idList[i]].unLock()
+
+            for(i in idList[0].indices){
+                imageList[idList[0][i]].unLock(idList[1][i])
             }
+
 
 
 
@@ -158,7 +161,7 @@ class CollectionViewModel(param: String?) : ViewModel() {
         }
     }
 
-    fun unlock(rank: Int): Tree {
+    fun unlock(rank: Int, whereGetIt:Int): Tree {
 
 
         var id:Int
@@ -166,22 +169,22 @@ class CollectionViewModel(param: String?) : ViewModel() {
         when (rank) {
             COMMON -> {
                 val rand =(0 until imageListCommon.size).random()
-                imageListCommon[rand].unLock()
+                imageListCommon[rand].unLock(whereGetIt)
                 id = imageListCommon[rand].id!!
             }
             UNCOMMON -> {
                 val rand =(0 until imageListUncommon.size).random()
-                imageListUncommon[rand].unLock()
+                imageListUncommon[rand].unLock(whereGetIt)
                 id = imageListUncommon[rand].id!!
             }
             RARE -> {
                 val rand =(0 until imageListRare.size).random()
-                imageListRare[rand].unLock()
+                imageListRare[rand].unLock(whereGetIt)
                 id = imageListRare[rand].id!!
             }
             else -> {
                 val rand =(0 until imageListLegendary.size).random()
-                imageListLegendary[rand].unLock()
+                imageListLegendary[rand].unLock(whereGetIt)
                 id = imageListLegendary[rand].id!!
             }
         }
@@ -191,7 +194,7 @@ class CollectionViewModel(param: String?) : ViewModel() {
             return imageList[id]
         }
         else{
-            db.insertUserCollection(imageList[id].id!!)
+            db.insertUserCollection(imageList[id].id!!, whereGetIt)
 
             imageToShowRare.value = imageListRare
             imageToShowCommon.value = imageListCommon

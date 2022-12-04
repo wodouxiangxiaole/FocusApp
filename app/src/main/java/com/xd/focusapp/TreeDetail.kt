@@ -1,5 +1,6 @@
 package com.xd.focusapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.Button
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class TreeDetail: AppCompatActivity(){
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tree_detail)
@@ -36,6 +38,19 @@ class TreeDetail: AppCompatActivity(){
         val name = findViewById<TextView>(R.id.Name)
 
         name.text = "Name: ${intent.getStringExtra("name")}"
+
+        val sourceText = findViewById<TextView>(R.id.source)
+
+        val source = intent.getIntExtra("source", 0)
+        var whereGetIt =
+            if(source == 0){
+                "Timer"
+            }
+            else{
+                "Spinner"
+            }
+        sourceText.text = "Get it from $whereGetIt "
+
 
 
         findViewById<Button>(R.id.back).setOnClickListener{

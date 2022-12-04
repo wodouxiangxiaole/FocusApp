@@ -168,8 +168,11 @@ class Database() {
     }
 
 
-    fun getUnlockedId(): ArrayList<Int>{
+    fun getUnlockedId(): ArrayList<ArrayList<Int>>{
         var id = ArrayList<Int>()
+        var source = ArrayList<Int>()
+
+        var unlockedArray = ArrayList<ArrayList<Int>>()
 
         try{
             val stat:Statement = connection!!.createStatement()
@@ -177,23 +180,28 @@ class Database() {
             println("currentUid = $currentUid")
             while(rs.next()) {
                 id.add(rs.getString(2).toInt())
+                source.add(rs.getString(3).toInt())
             }
         }
         catch (e:Exception){
             e.printStackTrace()
         }
-        return id
+
+        unlockedArray.add(id)
+        unlockedArray.add(source)
+
+        return unlockedArray
     }
 
     fun closeConnection(){
         connection!!.close()
     }
 
-    fun insertUserCollection(tid: Int) {
+    fun insertUserCollection(tid: Int, source:Int) {
         CoroutineScope(IO).launch {
             try {
                 val stat: Statement = connection!!.createStatement()
-                stat.executeUpdate("insert INTO users_collect_tree VALUES ($currentUid, $tid) ")
+                stat.executeUpdate("insert INTO users_collect_tree VALUES ($currentUid, $tid, $source) ")
 
             } catch (e: Exception) {
                 e.printStackTrace()
