@@ -1,6 +1,5 @@
-package com.xd.focusapp.data
+package com.xd.focusapp.data.model
 
-import com.xd.focusapp.data.model.LoggedInUser
 import java.io.IOException
 
 /**

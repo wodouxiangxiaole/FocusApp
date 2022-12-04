@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.xd.focusapp.data.LoginRepository
-import com.xd.focusapp.data.Result
+import com.xd.focusapp.data.model.LoginRepository
+import com.xd.focusapp.data.model.Result
 
 import com.xd.focusapp.R
 

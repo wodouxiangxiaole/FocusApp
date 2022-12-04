@@ -1,6 +1,4 @@
-package com.xd.focusapp.data
-
-import com.xd.focusapp.data.model.LoggedInUser
+package com.xd.focusapp.data.model
 
 /**
  * Class that requests authentication and user information from the remote data source and

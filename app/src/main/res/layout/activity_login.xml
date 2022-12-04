@@ -13,9 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/audiowide"
-        android:text="Login"
+        android:text="Focus"
         android:textColor="@color/dark_grey"
-        android:textSize="34sp"
+        android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,9 +41,10 @@
         android:textColorHint="@color/dark_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_tv"
-        app:layout_constraintVertical_bias="0.07999998" />
+        app:layout_constraintVertical_bias="0.051" />
 
     <EditText
         android:id="@+id/inputPassword_login"
@@ -103,12 +104,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Forgot your password ?"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword_login"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/inputPassword_login"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword_login"
-        app:layout_constraintVertical_bias="0.04000002" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/noAccount_tv"
@@ -116,31 +118,33 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Don't have an account?"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/loginButton"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="0.04000002" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/google_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#A6A4A4"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/circle_btn"
+        android:backgroundTint="@color/grey"
+
         android:drawableStart="@drawable/google"
         android:fontFamily="sans-serif-black"
-        android:text="Continue with Google"
         android:textAllCaps="false"
         app:icon="@drawable/google"
         app:iconPadding="8dp"
         app:iconTintMode="multiply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/loginButton"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/loginButton"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="0.629" />
+        app:layout_constraintTop_toBottomOf="@+id/Guest_loginBtn"
+        app:layout_constraintVertical_bias="0.478" />
 
     <ProgressBar
         android:id="@+id/loading"
