@@ -2,8 +2,8 @@ package com.xd.focusapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.xd.focusapp.data.LoginDataSource
-import com.xd.focusapp.data.LoginRepository
+import com.xd.focusapp.data.model.LoginDataSource
+import com.xd.focusapp.data.model.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

@@ -1,4 +1,4 @@
-package com.xd.focusapp.data
+package com.xd.focusapp.data.model
 
 /**
  * A generic class that holds a value with its loading status.
