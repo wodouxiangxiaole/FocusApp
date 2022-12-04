@@ -16,6 +16,7 @@ class MyDialog: DialogFragment() {
         const val DIALOG_KEY = "dialog"
         const val LOCK_DIALOG = 1
         const val CREDITS_NOT_ENOUGH = 2
+        const val USER_NOT_LOGIN = 3
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -37,6 +38,12 @@ class MyDialog: DialogFragment() {
         }
         else if(dialogId == CREDITS_NOT_ENOUGH){
             builder.setTitle("Your credits NOT enough")
+            builder.setPositiveButton("ok"){ dialog, which ->
+                dismiss()
+            }
+        }
+        else if(dialogId == USER_NOT_LOGIN){
+            builder.setTitle("You need login then you can spin the wheel")
             builder.setPositiveButton("ok"){ dialog, which ->
                 dismiss()
             }

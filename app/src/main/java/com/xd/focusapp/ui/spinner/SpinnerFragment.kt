@@ -61,32 +61,44 @@ class SpinnerFragment : Fragment() {
         wheel = root.findViewById(R.id.wheel)
 
         spin_button.setOnClickListener {
-            // if credits > 120 ==> can spin
             val sp = this.activity?.getSharedPreferences("userSp", Context.MODE_PRIVATE)
-            var credits = sp?.getString("credits", "")!!.toInt()
-            if(credits >= 120){
-                credits -= 120
 
-                var editor: SharedPreferences.Editor = sp.edit().apply {
-                    putString("credits", credits.toString())
-                }
-                editor.commit()
-
-                (activity as MainActivity?)?.updateMenuTitles()
-                if (!isSpinning) {
-                    spin()
-                    isSpinning = true
-                }
-            }
-            else{
+            // test user login or not ==> if guest mode ==> can not spin it
+            if(sp?.getString("email", null) == null){
                 val bundle = Bundle()
-                bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.CREDITS_NOT_ENOUGH)
+                bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.USER_NOT_LOGIN)
 
                 val dialog = MyDialog()
                 dialog.arguments = bundle
 
                 dialog.show(parentFragmentManager, "dialog")
+            }
+            else {
+                // if credits > 120 ==> can spin
+                var credits = sp?.getString("credits", "")!!.toInt()
+                if (credits >= 120) {
+                    credits -= 120
 
+                    var editor: SharedPreferences.Editor = sp.edit().apply {
+                        putString("credits", credits.toString())
+                    }
+                    editor.commit()
+
+                    (activity as MainActivity?)?.updateMenuTitles()
+                    if (!isSpinning) {
+                        spin()
+                        isSpinning = true
+                    }
+                } else {
+                    val bundle = Bundle()
+                    bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.CREDITS_NOT_ENOUGH)
+
+                    val dialog = MyDialog()
+                    dialog.arguments = bundle
+
+                    dialog.show(parentFragmentManager, "dialog")
+
+                }
             }
 
 

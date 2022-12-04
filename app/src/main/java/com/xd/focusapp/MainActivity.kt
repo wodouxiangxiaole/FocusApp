@@ -41,36 +41,49 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
+
+
+
 //        val email = intent.getStringExtra("email")
 //        val name = intent.getStringExtra("name")
 //        val id = intent.getStringExtra("id")
 //        val idToken = intent.getStringExtra("idToken")
 
-
-        db = Database()
-
-        //***************************************************************//
-        //***************************************************************//
-        val uemail = intent.getStringExtra("email")
-        val query = "select * from users where email = '${uemail}';"
-        //***************************************************************//
-        //***************************************************************//
-
-        // for test purpose
-//        val query = "select * from users where uid = 1;"
-        //val uemail = intent.getStringExtra("uemail")
-        user = db.getUser(query)
-
         sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
 
-        var editor: SharedPreferences.Editor = sp.edit().apply {
-            putString("name", user["user_name"])
-            putString("email", user["email"])
-            putString("credits", user["credits"])
-            putString("uid", user["uid"])
+
+        //***************************************************************//
+        //***************************************************************//
+        var uemail = intent.getStringExtra("email")
+
+        // if email == null ==> check the sharedPreference
+        // check if user already login
+        if(uemail == null){
+            uemail = sp.getString("email", null)
         }
-        editor.commit()
+
+        if(uemail != null){
+            auth = FirebaseAuth.getInstance()
+            db = Database()
+
+            val query = "select * from users where email = '${uemail}';"
+            //***************************************************************//
+            //***************************************************************//
+
+            // for test purpose
+            //val uemail = intent.getStringExtra("uemail")
+            user = db.getUser(query)
+
+            var editor: SharedPreferences.Editor = sp.edit().apply {
+                putString("name", user["user_name"])
+                putString("email", user["email"])
+                putString("credits", user["credits"])
+                putString("uid", user["uid"])
+            }
+            editor.commit()
+        }
+
+
 
         val navView: BottomNavigationView = binding.navView
 
@@ -123,14 +136,15 @@ class MainActivity : AppCompatActivity() {
         menu!!.findItem(R.id.credits).title = sp.getString("credits", "0")
 
         val credits = sp.getString("credits", "0")
-        db.updateUserCredits(credits!!.toInt())
 
+        if( intent.getStringExtra("email") != null) {
+
+            db.updateUserCredits(credits!!.toInt())
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
-
 
 
     }
