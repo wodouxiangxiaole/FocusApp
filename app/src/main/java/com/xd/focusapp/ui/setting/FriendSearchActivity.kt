@@ -48,8 +48,6 @@ class FriendSearchActivity : AppCompatActivity() {
         searchRec.adapter=searchAdapter
 
 
-
-
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search_menu,menu)
@@ -91,7 +89,7 @@ class FriendSearchActivity : AppCompatActivity() {
         val ret = db.searchPeople(query)
         users.clear()
         users=ret
-        println("debug: users ${users[0].name}")
+//        println("debug: users ${users[0].name}")
         searchAdapter=SearchAdapter(this,users)
         searchRec.adapter=searchAdapter
         searchAdapter.notifyDataSetChanged()

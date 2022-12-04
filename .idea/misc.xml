@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/ic_activity.xml" value="0.187" />
         <entry key="app/src/main/res/layout/activity_friend_search.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/activity_friends_main_page.xml" value="0.17604166666666668" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/activity_view_profile.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.25" />
         <entry key="app/src/main/res/layout/grid_view.xml" value="0.2947916666666667" />

@@ -116,7 +116,9 @@ class Database() {
                         newUser.icon = rs.getString(4)
                     }
                     newUser.uid=rs.getString(3)
-                    newUser.credits=rs.getString(2)
+                    if(rs.getString(2)!=null){
+                        newUser.credits=rs.getString(2)
+                    }
                     userList.add(newUser)
                  //   println("debug111: ${rs.getString(6)}")
                 }
