@@ -25,6 +25,7 @@ import java.time.Instant
 class FocusTimer: AppCompatActivity() {
     /** Messenger for communicating with the service.  */
     private var mService: FocusService? = null
+    private var randome: Long = Instant.now().epochSecond
 
     /** Flag indicating whether we have called bind on the service.  */
     private var bound: Boolean = false
@@ -47,9 +48,15 @@ class FocusTimer: AppCompatActivity() {
 
             timerLiveData = mService?.timerCountDownLiveData!!
             timerLiveData?.observe(that, { gg->
-                println("debuggg livedata observe " + gg)
+                println("debuggg livedata observe " + gg + " " + randome)
                 countDown.text = gg
             })
+
+            /**
+             * If user resume the app within 15 seconds, the killPlantTimer will be reset
+             */
+            println("debuggg reset kill plan timer to 0")
+            mService?.killPlantTimer = 0L
         }
 
         override fun onServiceDisconnected(className: ComponentName) {
@@ -66,12 +73,17 @@ class FocusTimer: AppCompatActivity() {
         setContentView(R.layout.activity_focus_timer)
 //        viewModel = ViewModelProvider(this).get(FocusViewModel::class.java)
         countDown = findViewById(R.id.countDown)
+        if (savedInstanceState != null) {
+            bound = savedInstanceState.getBoolean("serviceConnected", false)
+        }
 
         if (bound != true) {
             var timeInMillSec = intent.getIntExtra("time",0)
-            val intent = Intent (this, FocusService::class.java)
-            intent.putExtra("timeInMillSec",timeInMillSec)
-            startService(intent)
+            if (timeInMillSec != 0) {
+                val intent = Intent (this, FocusService::class.java)
+                intent.putExtra("timeInMillSec",timeInMillSec)
+                startService(intent)
+            }
         }
     }
 
@@ -94,7 +106,12 @@ class FocusTimer: AppCompatActivity() {
             appContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
         }
     }
+    override fun onPause() {
+        super.onPause()
 
+//        mService?.killPlantTimer = 0L
+
+    }
     override fun onResume() {
         super.onResume()
         if (bound == true) {
@@ -137,6 +154,11 @@ class FocusTimer: AppCompatActivity() {
             finish()
         }
     }
+
+//    override fun onRestart() {
+//        super.onRestart()
+//        mService?.killPlantTimer = 0L
+//    }
 
     private fun createNotifyChannel() {
         val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT).apply {

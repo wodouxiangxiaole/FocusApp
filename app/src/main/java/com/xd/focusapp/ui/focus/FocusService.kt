@@ -17,7 +17,9 @@ import java.time.Instant
 
 
 class FocusService : Service() {
+    private var myService: FocusService? = null
     private var timeInMillSec: Int = 0
+    private var randome: Long = Instant.now().epochSecond
 
     var timeDisplay: String = ""
     // Binder given to clients
@@ -30,8 +32,13 @@ class FocusService : Service() {
     val NOTIFY_ID = 2
     private lateinit var that: Context
 
+    override fun onCreate() {
+        super.onCreate()
+
+        myService = this
+    }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        println("debuggg onStartCommand")
+        println("debuggg onStartCommand " + randome)
         timeInMillSec = intent?.getIntExtra("timeInMillSec",0)!!
         timerCountDownLiveData = MutableLiveData<String>()
         var timer: CountDownTimer? = null
@@ -61,7 +68,7 @@ class FocusService : Service() {
                 }
 
                 //if (//global variable is set && global variable > 5 sec) then kill tree
-                if (killPlantTimer != 0L && Instant.now().epochSecond.minus(killPlantTimer) >= 10) {
+                if (killPlantTimer != 0L && Instant.now().epochSecond.minus(killPlantTimer) >= 20) {
                     //kill your damn tree
                     println("debuggg time to kill plant, use has left app for " + (Instant.now().epochSecond.minus(killPlantTimer)))
                     createNotifyChannel()
@@ -88,7 +95,7 @@ class FocusService : Service() {
 
                 }
                 timeDisplay = String.format("%s:%s:%s", hourDisplay, minDisplay, secDisplay)
-                println("debuggg livedata set " + timeDisplay)
+                println("debuggg livedata set " + timeDisplay + " "+ randome)
 
                 timerCountDownLiveData.value = timeDisplay
             }
@@ -127,6 +134,8 @@ class FocusService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        myService = null
     }
 
 }

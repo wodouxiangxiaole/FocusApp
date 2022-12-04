@@ -74,26 +74,21 @@ class FocusFragment : Fragment() {
             var timeInMin = sharedPreference?.getInt("Timer", 0)
             var timeInMillSec = (timeInMin?.times(60) ?: 0 ) * 1000
 
-//            var countDown = binding.countDown
+            if (timeInMillSec != 0) {
+                // go to FocusTimer activity
+                val intent = Intent(requireActivity(), FocusTimer::class.java)
+                intent.putExtra("time",timeInMillSec)
+                startActivity(intent)
+            }
 
-//            val intent: Intent = Intent (requireActivity(), FocusService::class.java)
-//            intent.putExtra("timeInMillSec",timeInMillSec)
-
-            // go to FocusTimer activity
-            val intent = Intent(requireActivity(), FocusTimer::class.java)
-            intent.putExtra("time",timeInMillSec)
-            startActivity(intent)
-
-
+            // clean up old timer after its consumed
+            var editor = sharedPreference?.edit()
+            editor?.remove("Timer")
+            editor?.commit()
         }
 
         return root
     }
-
-//    fun setTimer() {
-//
-//        TimePickerFragment().show(supportFragmentManager, "timePicker")
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
