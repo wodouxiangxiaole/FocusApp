@@ -84,11 +84,12 @@ class SpinnerFragment : Fragment() {
                     }
                     editor.commit()
 
-                    (activity as MainActivity?)?.updateMenuTitles()
                     if (!isSpinning) {
                         spin()
                         isSpinning = true
                     }
+                    (activity as MainActivity?)?.updateMenuTitles()
+
                 } else {
                     val bundle = Bundle()
                     bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.CREDITS_NOT_ENOUGH)

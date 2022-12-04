@@ -52,19 +52,27 @@ class MainActivity : AppCompatActivity() {
         sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
 
 
-        //***************************************************************//
-        //***************************************************************//
+
         var uemail = intent.getStringExtra("email")
 
         // if email == null ==> check the sharedPreference
         // check if user already login
         if(uemail == null){
             uemail = sp.getString("email", null)
+
+            //***************************************************************//
+            //***************************************************************//
+            // need disable it when push
+
+            // uemail = "testls8@gmail.com"
+            //***************************************************************//
+            //***************************************************************//
         }
 
         if(uemail != null){
-            auth = FirebaseAuth.getInstance()
             db = Database()
+            auth = FirebaseAuth.getInstance()
+
 
             val query = "select * from users where email = '${uemail}';"
             //***************************************************************//
@@ -111,10 +119,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun click(view: View){
-        val intent = Intent(this, LaunchGame::class.java)
-        startActivity(intent)
-    }
+//    fun click(view: View){
+//        val intent = Intent(this, LaunchGame::class.java)
+//        startActivity(intent)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -137,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
         val credits = sp.getString("credits", "0")
 
-        if( intent.getStringExtra("email") != null) {
+        if(sp.getString("email", null) != null) {
 
             db.updateUserCredits(credits!!.toInt())
         }
