@@ -34,8 +34,8 @@ class CollectionViewModel : ViewModel() {
         R.drawable.purple_flower,
         R.drawable.velvetty_white_flower,
         R.drawable.white_flower
-
     )
+
 
     var treeName = arrayOf(
         "Autumn Tree",
@@ -100,10 +100,7 @@ class CollectionViewModel : ViewModel() {
 
 
             db = Database()
-            val idList = db.getUnlockedId(uid)
-
-
-
+            val idList = db.getUnlockedId()
 
             imageList.clear()
 
@@ -197,7 +194,7 @@ class CollectionViewModel : ViewModel() {
             return imageList[id]
         }
         else{
-            db.insertUserCollection(uid, imageList[id].id!!)
+            db.insertUserCollection(imageList[id].id!!)
 
             imageToShowRare.value = imageListRare
             imageToShowCommon.value = imageListCommon

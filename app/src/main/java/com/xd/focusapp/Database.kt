@@ -32,6 +32,8 @@ class Database() {
     private var url = "jdbc:postgresql://%s:%d/%s"
     private var status = false
 
+    private var currentUid:Int ?= null
+
 
     init {
         url = String.format(url, this.host, this.port, this.database)
@@ -130,7 +132,6 @@ class Database() {
 
     fun getUser(query: String):MutableMap<String,String>{
         val map = mutableMapOf<String,String>()
-        println("debug111:")
         val a1 = Thread  {
             try{
                 val stat:Statement = connection!!.createStatement()
@@ -141,6 +142,9 @@ class Database() {
                         map["credits"] = rs.getString(2)
                     }
                     map["uid"] = rs.getString(3)
+                    currentUid = rs.getString(3).toInt()
+
+                    println("debug: uid = $currentUid")
                     if(rs.getString(4)!=null){
                         map["icon"] = rs.getString(4)
                     }
@@ -162,19 +166,18 @@ class Database() {
     }
 
 
-    fun getUnlockedId(uid:Int): ArrayList<Int>{
+    fun getUnlockedId(): ArrayList<Int>{
         var id = ArrayList<Int>()
 
         try{
             val stat:Statement = connection!!.createStatement()
-            val rs = stat.executeQuery("SELECT * FROM users_collect_tree WHERE uid = $uid")
+            val rs = stat.executeQuery("SELECT * FROM users_collect_tree WHERE uid = $currentUid")
             while(rs.next()) {
                 id.add(rs.getString(2).toInt())
             }
         }
         catch (e:Exception){
             e.printStackTrace()
-
         }
         return id
     }
@@ -183,11 +186,11 @@ class Database() {
         connection!!.close()
     }
 
-    fun insertUserCollection(uid: Int, tid: Int) {
+    fun insertUserCollection(tid: Int) {
         CoroutineScope(IO).launch {
             try {
                 val stat: Statement = connection!!.createStatement()
-                stat.executeUpdate("insert INTO users_collect_tree VALUES ($uid, $tid) ")
+                stat.executeUpdate("insert INTO users_collect_tree VALUES ($currentUid, $tid) ")
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -196,25 +199,17 @@ class Database() {
         }
     }
 
-//    fun getCredits(uid:Int):String {
-//        val credits = MutableLiveData<String>();
-//        val t = Thread {
-//            try {
-//                val stat: Statement = connection!!.createStatement()
-//                val rs = stat.executeQuery("SELECT credits FROM users WHERE uid = $uid")
-//                while (rs.next()) {
-//                    credits.value = rs.getString(2)
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//
-//            }
-//        }
-//        t.start()
-//        t.join()
-//
-//        return credits.value!!;
-//    }
+    fun updateUserCredits(credits: Int){
+        CoroutineScope(IO).launch {
+            try{
+                val stat:Statement = connection!!.createStatement()
+                stat.executeUpdate("UPDATE users SET credits = $credits WHERE uid = $currentUid")
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+    }
 
 
 }

@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.xd.focusapp.Database
+import com.xd.focusapp.DatabaseViewModel
 import com.xd.focusapp.MainActivity
 import com.xd.focusapp.databinding.ActivityLoginBinding
 
@@ -51,7 +52,8 @@ open class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val db = Database()
+        val databaseViewModel = ViewModelProvider(this).get(DatabaseViewModel::class.java)
+        val db = databaseViewModel.db
 //
 //        // test
 //         val query = "select * from users"

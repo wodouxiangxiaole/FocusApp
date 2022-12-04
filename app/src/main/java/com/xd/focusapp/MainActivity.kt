@@ -1,5 +1,6 @@
 package com.xd.focusapp
 
+import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var menu:Menu
 
+    private lateinit var sp:SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,25 +42,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        val email = intent.getStringExtra("email")
-        val name = intent.getStringExtra("name")
-        val id = intent.getStringExtra("id")
-        val idToken = intent.getStringExtra("idToken")
+//        val email = intent.getStringExtra("email")
+//        val name = intent.getStringExtra("name")
+//        val id = intent.getStringExtra("id")
+//        val idToken = intent.getStringExtra("idToken")
 
-        db = Database()
+
+        val databaseViewModel = ViewModelProvider(this).get(DatabaseViewModel::class.java)
+        db = databaseViewModel.db
+
         //***************************************************************//
         //***************************************************************//
-//        val uemail = intent.getStringExtra("uemail")
-//        val query = "select * from users where email = ${uemail};"
+        val uemail = intent.getStringExtra("email")
+        val query = "select * from users where email = '${uemail}';"
         //***************************************************************//
         //***************************************************************//
 
         // for test purpose
-        val query = "select * from users where uid = 1;"
+//        val query = "select * from users where uid = 1;"
         //val uemail = intent.getStringExtra("uemail")
         user = db.getUser(query)
 
-        val sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
+        sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
 
         var editor: SharedPreferences.Editor = sp.edit().apply {
             putString("name", user["user_name"])
@@ -71,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_setting,
@@ -84,6 +92,10 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        if(uemail == null){
+
+        }
     }
 
     fun click(view: View){
@@ -98,17 +110,41 @@ class MainActivity : AppCompatActivity() {
 
         this.menu = menu!!
 
+
+//        sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
+//
+//        if(sp.getString("email", "") == ""){
+//            menu.getItem(3).isEnabled = false
+//            menu.getItem(4).isEnabled = false
+//        }
+
+
+
+
+
         updateMenuTitles()
 
         return true
     }
 
+
     fun updateMenuTitles(){
-        val sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
 
         // change to proper uid later on
         // find menu item and replace item title to current credits
         menu!!.findItem(R.id.credits).title = sp.getString("credits", "")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // update credits at end when activity finish
+        val credits = sp.getString("credits", "0")
+
+        db.updateUserCredits(credits!!.toInt())
+
+
 
     }
 

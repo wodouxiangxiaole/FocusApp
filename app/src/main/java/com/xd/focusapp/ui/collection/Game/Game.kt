@@ -9,7 +9,6 @@ class Game(context: Context): SurfaceView(context), SurfaceHolder.Callback{
     private var joystick: Joystick ?= null
     private var player: Player ?= null
     private var thread: GameLoop
-    private lateinit var surfaceHolder: SurfaceHolder
 
     init {
         // add callback
@@ -33,10 +32,7 @@ class Game(context: Context): SurfaceView(context), SurfaceHolder.Callback{
             thread = GameLoop(this, surfaceHolder)
         }
 
-        surfaceHolder = p0
 
-
-        draw()
 //
         thread.startLoop()
         thread.run()
@@ -69,20 +65,20 @@ class Game(context: Context): SurfaceView(context), SurfaceHolder.Callback{
         joystick!!.update()
     }
 
-    private fun draw(){
-        val c = surfaceHolder.lockCanvas()
-        player!!.draw(c)
-        joystick!!.draw(c)
-        holder.unlockCanvasAndPost(c)
+//    private fun draw(){
+//        val c = holder.lockCanvas()
+//        player!!.draw(c)
+//        joystick!!.draw(c)
+//        holder.unlockCanvasAndPost(c)
+//    }
+
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        player!!.draw(canvas)
+        joystick!!.draw(canvas)
     }
 
-//
-//    override fun onDraw(canvas: Canvas) {
-//        super.onDraw(canvas)
-//        player!!.draw(canvas)
-//        joystick!!.draw(canvas)
-//    }
-//
 
 
 }

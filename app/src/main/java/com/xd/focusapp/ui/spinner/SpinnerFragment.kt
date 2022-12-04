@@ -63,8 +63,6 @@ class SpinnerFragment : Fragment() {
             var credits = sp?.getString("credits", "")!!.toInt()
             if(credits >= 120){
                 credits -= 120
-                val bundle = Bundle()
-                bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.LOCK_DIALOG)
 
                 var editor: SharedPreferences.Editor = sp.edit().apply {
                     putString("credits", credits.toString())
@@ -80,6 +78,12 @@ class SpinnerFragment : Fragment() {
             else{
                 val bundle = Bundle()
                 bundle.putInt(MyDialog.DIALOG_KEY, MyDialog.CREDITS_NOT_ENOUGH)
+
+                val dialog = MyDialog()
+                dialog.arguments = bundle
+
+                dialog.show(parentFragmentManager, "dialog")
+
             }
 
 
