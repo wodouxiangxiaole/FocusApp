@@ -172,6 +172,7 @@ class Database() {
         try{
             val stat:Statement = connection!!.createStatement()
             val rs = stat.executeQuery("SELECT * FROM users_collect_tree WHERE uid = $currentUid")
+            println("currentUid = $currentUid")
             while(rs.next()) {
                 id.add(rs.getString(2).toInt())
             }

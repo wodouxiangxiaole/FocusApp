@@ -1,5 +1,6 @@
 package com.xd.focusapp.ui.collection
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,8 +24,12 @@ class AllFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val sp = this.activity?.getSharedPreferences("userSp", Context.MODE_PRIVATE)
+        val viewModelFactory = CollectionViewModelFactory(sp!!.getString("email", ""))
         val collectionViewModel =
-            ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
+            ViewModelProvider(requireActivity(), viewModelFactory).get(CollectionViewModel::class.java)
+
 
         val view = inflater.inflate(R.layout.fragment_all, container, false)
         gridView = view.findViewById(R.id.gridView_all)

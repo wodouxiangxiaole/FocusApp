@@ -1,18 +1,11 @@
 package com.xd.focusapp.ui.login
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -23,12 +16,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.xd.focusapp.Database
-import com.xd.focusapp.DatabaseViewModel
 import com.xd.focusapp.MainActivity
 import com.xd.focusapp.databinding.ActivityLoginBinding
 
-import com.xd.focusapp.R
+import com.xd.focusapp.ui.collection.CollectionViewModel
 
 open class ActivityLogin : AppCompatActivity() {
 
@@ -52,8 +43,6 @@ open class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val databaseViewModel = ViewModelProvider(this).get(DatabaseViewModel::class.java)
-        val db = databaseViewModel.db
 //
 //        // test
 //         val query = "select * from users"

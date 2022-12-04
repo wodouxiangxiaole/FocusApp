@@ -53,8 +53,6 @@ class CollectionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val collectionViewModel =
-            ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
 
         _binding = FragmentCollectionBinding.inflate(inflater, container, false)
         val root: View = binding.root

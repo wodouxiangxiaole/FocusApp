@@ -1,16 +1,16 @@
 package com.xd.focusapp.ui.collection
-import android.provider.ContactsContract.Data
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.xd.focusapp.Database
 import com.xd.focusapp.R
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlin.collections.ArrayList
-import kotlin.random.Random
 
-class CollectionViewModel : ViewModel() {
+
+class CollectionViewModel(param: String?) : ViewModel() {
 
     var images = intArrayOf(
         R.drawable.image1,
@@ -83,23 +83,20 @@ class CollectionViewModel : ViewModel() {
     private var UNCOMMON = 2
     private var COMMON = 3
 
-
-    // for test purpose
-    var uid = 1
-    private lateinit var db:Database
-
-
+    var db:Database
 
 
     init {
+        db = Database()
+        val query = "select * from users where email = '${param}';"
+        db.getUser(query)
+
         Task()
+        println("debug --- create db")
     }
 
     fun Task(){
         CoroutineScope(IO).launch {
-
-
-            db = Database()
             val idList = db.getUnlockedId()
 
             imageList.clear()
@@ -221,6 +218,17 @@ class CollectionViewModel : ViewModel() {
     }
 
 
+
+}
+
+class CollectionViewModelFactory (param: String?) : ViewModelProvider.Factory{
+    private var mParam = param
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(CollectionViewModel::class.java))
+            return CollectionViewModel(mParam) as T
+        throw IllegalAccessException("Unknown ViewModel class")
+    }
 
 
 }

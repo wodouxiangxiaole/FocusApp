@@ -48,8 +48,7 @@ class MainActivity : AppCompatActivity() {
 //        val idToken = intent.getStringExtra("idToken")
 
 
-        val databaseViewModel = ViewModelProvider(this).get(DatabaseViewModel::class.java)
-        db = databaseViewModel.db
+        db = Database()
 
         //***************************************************************//
         //***************************************************************//
@@ -94,7 +93,8 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         if(uemail == null){
-
+//            navView.menu.findItem(3).isVisible = false
+//
         }
     }
 
@@ -110,18 +110,6 @@ class MainActivity : AppCompatActivity() {
 
         this.menu = menu!!
 
-
-//        sp = getSharedPreferences("userSp", Context.MODE_PRIVATE)
-//
-//        if(sp.getString("email", "") == ""){
-//            menu.getItem(3).isEnabled = false
-//            menu.getItem(4).isEnabled = false
-//        }
-
-
-
-
-
         updateMenuTitles()
 
         return true
@@ -129,20 +117,19 @@ class MainActivity : AppCompatActivity() {
 
 
     fun updateMenuTitles(){
-
         // change to proper uid later on
         // find menu item and replace item title to current credits
-        menu!!.findItem(R.id.credits).title = sp.getString("credits", "")
+
+        menu!!.findItem(R.id.credits).title = sp.getString("credits", "0")
+
+        val credits = sp.getString("credits", "0")
+        db.updateUserCredits(credits!!.toInt())
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        // update credits at end when activity finish
-        val credits = sp.getString("credits", "0")
-
-        db.updateUserCredits(credits!!.toInt())
 
 
 

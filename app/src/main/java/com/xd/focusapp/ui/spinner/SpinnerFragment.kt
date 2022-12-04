@@ -18,6 +18,7 @@ import com.xd.focusapp.MainActivity
 import com.xd.focusapp.R
 import com.xd.focusapp.databinding.FragmentSpinnerBinding
 import com.xd.focusapp.ui.collection.CollectionViewModel
+import com.xd.focusapp.ui.collection.CollectionViewModelFactory
 import com.xd.focusapp.ui.collection.MyDialog
 import java.util.*
 
@@ -48,8 +49,10 @@ class SpinnerFragment : Fragment() {
         spinnerViewModel =
             ViewModelProvider(this).get(SpinnerViewModel::class.java)
 
+        val sp = this.activity?.getSharedPreferences("userSp", Context.MODE_PRIVATE)
+        val viewModelFactory = CollectionViewModelFactory(sp!!.getString("email", ""))
         collectionViewModel =
-            ViewModelProvider(requireActivity()).get(CollectionViewModel::class.java)
+            ViewModelProvider(requireActivity(), viewModelFactory).get(CollectionViewModel::class.java)
 
         _binding = FragmentSpinnerBinding.inflate(inflater, container, false)
         val root: View = binding.root
