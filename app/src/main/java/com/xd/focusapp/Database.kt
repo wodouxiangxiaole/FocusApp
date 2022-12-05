@@ -253,7 +253,7 @@ class Database() {
         CoroutineScope(IO).launch {
             try{
                 val stat:Statement = connection!!.createStatement()
-                stat.executeUpdate("insert INTO users_activity VALUES ($currentUid, $focusTime, $startTime)")
+                stat.executeUpdate("insert INTO users_activity VALUES ($currentUid, $focusTime, '$startTime')")
             }
             catch (e:Exception){
                 e.printStackTrace()
