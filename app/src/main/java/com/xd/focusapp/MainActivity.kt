@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        println("timeMillis = ${System.currentTimeMillis()}")
 
 
 
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             //***************************************************************//
             // need disable it when push
 
-            // uemail = "testls8@gmail.com"
+//             uemail = "testls8@gmail.com"
             //***************************************************************//
             //***************************************************************//
         }

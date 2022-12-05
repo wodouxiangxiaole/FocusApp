@@ -222,5 +222,45 @@ class Database() {
         }
     }
 
+    fun updateActivityTable(): ArrayList<ArrayList<String>>{
+
+        val arrayMap = ArrayList<ArrayList<String>>()
+        val focusTimeList = ArrayList<String>()
+        val startTimeList = ArrayList<String>()
+        val a1 = Thread  {
+            try{
+                val stat:Statement = connection!!.createStatement()
+                val query = "SELECT * FROM users_activity where uid = $currentUid"
+                val rs = stat.executeQuery(query)
+                while(rs.next()) {
+                    focusTimeList.add(rs.getString(2))
+                    startTimeList.add(rs.getString(3))
+                }
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+        arrayMap.add(focusTimeList)
+        arrayMap.add(startTimeList)
+        a1.start()
+        a1.join()
+
+        return arrayMap
+    }
+
+    fun insertUserHistory(uid:Int, focusTime:Int, startTime:String){
+        CoroutineScope(IO).launch {
+            try{
+                val stat:Statement = connection!!.createStatement()
+                stat.executeUpdate("insert INTO users_activity VALUES ($uid, $focusTime, $startTime)")
+            }
+            catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+
+    }
+
 
 }

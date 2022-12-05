@@ -55,6 +55,8 @@ class CommonFragment:Fragment() {
                 intent.putExtra("image", imageList[i].image)
                 intent.putExtra("rarity", imageList[i].getRank())
                 intent.putExtra("name", imageList[i].treeName)
+                intent.putExtra("source", imageList[i].whereGetIt)
+
 
                 startActivity(intent)
             }

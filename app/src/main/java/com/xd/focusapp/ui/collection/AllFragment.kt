@@ -60,7 +60,6 @@ class AllFragment:Fragment() {
                 intent.putExtra("rarity", imageList[i].getRank())
                 intent.putExtra("name", imageList[i].treeName)
                 intent.putExtra("source", imageList[i].whereGetIt)
-                println("source = ${imageList[i].whereGetIt}")
 
                 startActivity(intent)
             }

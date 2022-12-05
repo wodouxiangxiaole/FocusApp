@@ -11,6 +11,8 @@ class Tree {
     // 0 ==> timer |||| 1 ==> spinner
     var whereGetIt:Int ?= null
 
+
+
     // rank 0 ~ 3
     // 0 - legendary
     // 1 - rare

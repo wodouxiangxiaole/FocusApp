@@ -36,7 +36,6 @@ class UncommonFragment:Fragment() {
 
         gridView.adapter = customAdapter
 
-
         collectionViewModel.imageToShowUncommon.observe(viewLifecycleOwner, Observer {
             imageList = it
             customAdapter.replace(it)
@@ -51,6 +50,7 @@ class UncommonFragment:Fragment() {
                 intent.putExtra("image", imageList[i].image)
                 intent.putExtra("rarity", imageList[i].getRank())
                 intent.putExtra("name", imageList[i].treeName)
+                intent.putExtra("source", imageList[i].whereGetIt)
 
                 startActivity(intent)
             }
