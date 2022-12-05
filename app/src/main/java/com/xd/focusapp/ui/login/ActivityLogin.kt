@@ -61,7 +61,7 @@ open class ActivityLogin : AppCompatActivity() {
         loading.visibility = View.INVISIBLE
         guest = binding.GuestLoginBtn
         signUp = binding.noAccountTv
-        pwReset = binding.forgetPwTv
+        //pwReset = binding.forgetPwTv
         google = binding.googleButton
         firebaseAuth = Firebase.auth
 
@@ -72,70 +72,16 @@ open class ActivityLogin : AppCompatActivity() {
             performAuth()
         }
 
-//        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-//            .get(LoginViewModel::class.java)
-//
-//        loginViewModel.loginFormState.observe(this, Observer {
-//            val loginState = it ?: return@Observer
-//
-//            // disable login button unless both username / password is valid
-//            login.isEnabled = loginState.isDataValid
-//
-//            if (loginState.usernameError != null) {
-//                username.error = getString(loginState.usernameError)
-//            }
-//            if (loginState.passwordError != null) {
-//                password.error = getString(loginState.passwordError)
-//            }
-//        })
-//
-//        loginViewModel.loginResult.observe(this, Observer {
-//            val loginResult = it ?: return@Observer
-//
-//            loading.visibility = View.GONE
-//            if (loginResult.error != null) {
-//                showLoginFailed(loginResult.error)
-//            }
-//            if (loginResult.success != null) {
-//                updateUiWithUser(loginResult.success)
-//            }
-//            setResult(Activity.RESULT_OK)
-//
-//            //Complete and destroy login activity once successful
-//            finish()
-//        })
-//
-//        username.afterTextChanged {
-//            loginViewModel.loginDataChanged(
-//                username.text.toString(),
-//                password.text.toString()
-//            )
+//        if(firebaseAuth.currentUser != null){
+//            val user  = firebaseAuth.currentUser!!.email.toString()
+//            println("debug: check firebase user $user " )
+//            val intent = Intent(this, MainActivity::class.java)
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//            intent.putExtra("email", firebaseAuth.currentUser!!.email.toString())
+//            startActivity(intent)
 //        }
-//
-//        password.apply {
-//            afterTextChanged {
-//                loginViewModel.loginDataChanged(
-//                    username.text.toString(),
-//                    password.text.toString()
-//                )
-//            }
-//
-//            setOnEditorActionListener { _, actionId, _ ->
-//                when (actionId) {
-//                    EditorInfo.IME_ACTION_DONE ->
-//                        loginViewModel.login(
-//                            username.text.toString(),
-//                            password.text.toString()
-//                        )
-//                }
-//                false
-//            }
-//
-//            login.setOnClickListener {
-//                loading.visibility = View.VISIBLE
-//                loginViewModel.login(username.text.toString(), password.text.toString())
-//            }
-//        }
+
+
     }
 
     private fun performAuth() {

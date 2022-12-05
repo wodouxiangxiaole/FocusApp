@@ -8,12 +8,18 @@ import androidx.lifecycle.ViewModel
 class SettingViewModel : ViewModel() {
 
     val userImg = MutableLiveData<Bitmap>()
-    val settingOptions = arrayOf(
+//    val settingOptions = arrayOf(
+//        "Friends",
+//        "Account Security",
+//        "Message Notifications", "General", "Friends' Permissions",
+//        "About", "Help & Feedback",
+//        "Log out")
+        val settingOptions = arrayOf(
         "Friends",
-        "Account Security",
-        "Message Notifications", "General", "Friends' Permissions",
-        "About", "Help & Feedback",
-        "Log out")
+        "About",
+        "Weblink",
+        "Switch User"
+        )
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is Setting Fragment"

@@ -118,6 +118,16 @@ class SettingFragment : Fragment() {
 //                intent.putExtra("user",bundle)
                 startActivity(intent)
             }
+            if(settingOptions[position]=="Switch User"){
+
+            }
+            if(settingOptions[position]=="About"){
+
+            }
+            if(settingOptions[position]=="Weblink"){
+
+            }
+
         }
 
 
@@ -156,4 +166,5 @@ class SettingFragment : Fragment() {
         var ret = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         return ret
     }
+
 }
