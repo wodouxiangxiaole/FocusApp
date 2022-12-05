@@ -125,6 +125,8 @@ class SettingFragment : Fragment() {
 
             }
             if(settingOptions[position]=="Weblink"){
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/wodouxiangxiaole/FocusApp"))
+                startActivity(browserIntent)
 
             }
 
