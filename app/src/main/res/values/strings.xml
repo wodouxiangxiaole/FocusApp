@@ -5,7 +5,7 @@
     <string name="title_focus">Focus</string>
     <string name="title_spinner">Spinner</string>
     <string name="title_collection">Collection</string>
-    <string name="title_activity_login">Login to Focus</string>
+    <string name="title_activity_login">Focus</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
