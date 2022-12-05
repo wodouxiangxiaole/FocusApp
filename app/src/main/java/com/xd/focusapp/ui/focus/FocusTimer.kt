@@ -25,8 +25,12 @@ import com.xd.focusapp.R
 import com.xd.focusapp.ui.collection.CollectionViewModel
 import com.xd.focusapp.ui.collection.CollectionViewModelFactory
 import com.xd.focusapp.ui.spinner.SpinnerFinishDialog
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.util.*
 
 
 class FocusTimer: AppCompatActivity() {
@@ -105,7 +109,12 @@ class FocusTimer: AppCompatActivity() {
         setContentView(R.layout.activity_focus_timer)
 //        viewModel = ViewModelProvider(this).get(FocusViewModel::class.java)
         countDown = findViewById(R.id.countDown)
-        startTime = Instant.now().toString()
+//        startTime = Instant.now().toString()
+
+        val calendar = Calendar.getInstance()
+
+
+        startTime = SimpleDateFormat("HH:mm:ss MMM dd yyyy").format(calendar.time)
 
         if (savedInstanceState != null) {
             bound = savedInstanceState.getBoolean("serviceConnected", false)
