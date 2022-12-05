@@ -138,6 +138,7 @@ class SpinnerFragment : Fragment() {
                 // GET PLANT FROM SPINNER
                 val plant = collectionViewModel.unlock(res, 1)
 
+
                 val dialog = SpinnerFinishDialog()
                 val bundle = Bundle()
                 bundle.putInt("image", plant.image!!)

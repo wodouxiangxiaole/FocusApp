@@ -129,16 +129,9 @@ class CollectionViewModel(param: String?) : ViewModel() {
             imageList[19].setRank(2)
             imageList[20].setRank(2)
 
-
-
-
             for(i in idList[0].indices){
                 imageList[idList[0][i]].unLock(idList[1][i])
             }
-
-
-
-
 
             for (i in images.indices) {
                 if(imageList[i].getRank() == RARE){
