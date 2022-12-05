@@ -4,38 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.spinner.SpinnerFragment">
+    tools:context=".ui.spinner.SpinnerFragment"
+    android:background="@drawable/focus_bg">
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="50dp"
+        android:id="@+id/spinner_RL">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/target"
-            android:id="@+id/target"
-            android:layout_centerHorizontal="true"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/wheel"
-            android:layout_below="@+id/target"
             android:id="@+id/wheel"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spin"
-            android:textSize="30dp"
-            android:layout_below="@+id/wheel"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:id="@+id/spin_button"/>
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/wheel3" />
+
+        <ImageView
+            android:id="@+id/wheel_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/frame" />
+
+
+
+
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/spin_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignBottom="@id/spinner_RL"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-93dp"
+        android:backgroundTint="#FFD54F"
+        android:fontFamily="@font/arbutus"
+        android:text="Spin"
+        android:textSize="30dp" />
 </RelativeLayout>
 
