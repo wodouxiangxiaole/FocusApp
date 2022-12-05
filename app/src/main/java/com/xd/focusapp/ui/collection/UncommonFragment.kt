@@ -43,23 +43,24 @@ class UncommonFragment:Fragment() {
             customAdapter.notifyDataSetChanged()
         })
 
-        gridView.setOnItemClickListener{adapterView, view, i, l ->
-
-            if(imageList[i].status) {
-                val intent = Intent(requireActivity(), TreeDetail::class.java)
-                intent.putExtra("image", imageList[i].image)
-                intent.putExtra("rarity", imageList[i].getRank())
-                intent.putExtra("name", imageList[i].treeName)
-                intent.putExtra("source", imageList[i].whereGetIt)
-
-                startActivity(intent)
-            }
-            else{
-                val dialog = MyDialog()
-                dialog.show(parentFragmentManager, "alert")
-            }
-
-        }
+//        gridView.setOnItemClickListener{adapterView, view, i, l ->
+//
+//            println("debug uncommon ")
+//            if(imageList[i].status) {
+//                val intent = Intent(requireActivity(), TreeDetail::class.java)
+//                intent.putExtra("image", imageList[i].image)
+//                intent.putExtra("rarity", imageList[i].getRank())
+//                intent.putExtra("name", imageList[i].treeName)
+//                intent.putExtra("source", imageList[i].whereGetIt)
+//
+//                startActivity(intent)
+//            }
+//            else{
+//                val dialog = MyDialog()
+//                dialog.show(parentFragmentManager, "alert")
+//            }
+//
+//        }
 
         return view
     }
