@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.MutableLiveData
+import com.xd.focusapp.MainActivity
 import com.xd.focusapp.R
 import java.time.Instant
 
@@ -69,12 +70,12 @@ class FocusService : Service() {
                 }
 
                 //if (//global variable is set && global variable > 5 sec) then kill tree
-                if (killPlantTimer != 0L && Instant.now().epochSecond.minus(killPlantTimer) >= 20) {
+                if (killPlantTimer != 0L && Instant.now().epochSecond.minus(killPlantTimer) >= 10) {
                     //kill your damn tree
                     println("debuggg time to kill plant, use has left app for " + (Instant.now().epochSecond.minus(killPlantTimer)))
                     createNotifyChannel()
 
-                    val intent = Intent(that, FocusService::class.java)
+                    val intent = Intent(that, MainActivity::class.java)
                     val pendingIntent = TaskStackBuilder.create(that).run {
                         addNextIntent(intent)
                         getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
@@ -90,7 +91,7 @@ class FocusService : Service() {
 
                     val notifyManger = NotificationManagerCompat.from(that)
                     notifyManger.notify(NOTIFY_ID, notify)
-
+                    notifyManger.deleteNotificationChannel("channelID");
                     timer?.cancel()
                     (that as FocusService).stopSelf()
 
