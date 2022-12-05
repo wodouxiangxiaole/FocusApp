@@ -6,14 +6,15 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.xd.focusapp.MainActivity
 import com.xd.focusapp.R
+import com.xd.focusapp.ui.focus.FocusTimer
 
 class SpinnerFinishDialog: DialogFragment() {
+
     companion object{
         var REPEAT_KEY = 100
         var NORMAL_KEY = 200
@@ -67,7 +68,10 @@ class SpinnerFinishDialog: DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        (activity as MainActivity?)?.updateMenuTitles()
-
+        if (activity is MainActivity) {
+            (activity as MainActivity?)?.updateMenuTitles()
+        } else if (activity is FocusTimer) {
+            (activity as FocusTimer?)?.updateDB()
+        }
     }
 }

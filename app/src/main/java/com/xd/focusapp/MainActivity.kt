@@ -136,7 +136,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-
     fun updateMenuTitles(){
         // change to proper uid later on
         // find menu item and replace item title to current credits
@@ -144,7 +143,6 @@ class MainActivity : AppCompatActivity() {
         menu!!.findItem(R.id.credits).title = sp.getString("credits", "0")
 
         val credits = sp.getString("credits", "0")
-
         if(sp.getString("email", null) != null) {
 
             db.updateUserCredits(credits!!.toInt())
@@ -153,11 +151,5 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
-
     }
-
-
-
-
 }
