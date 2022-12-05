@@ -1,6 +1,8 @@
 package com.xd.focusapp.ui.setting
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -32,12 +34,12 @@ class FriendSearchActivity : AppCompatActivity() {
    //     searchBtn= findViewById(R.id.friend_search_btn)
         searchRec= findViewById(R.id.search_Recy)
 
-
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener{
-            onBackPressed()
+            val intent = Intent(this, FriendsMainPage::class.java)
+            startActivity(intent)
         }
 
         users= mutableListOf()
@@ -85,7 +87,9 @@ class FriendSearchActivity : AppCompatActivity() {
 
     private fun searchPeopleFromDb(qString:String, b:Boolean){
         val db = Database()
-        val query = "select * from users where user_name like '$qString%' limit 10;"
+        val sp = this.getSharedPreferences("userSp", Context.MODE_PRIVATE)
+        val curID = sp.getString("uid","-1")!!.toInt()
+        val query = "select * from users where user_name like '$qString%' and uid!=${curID}  limit 10;"
         val ret = db.searchPeople(query)
         users.clear()
         users=ret

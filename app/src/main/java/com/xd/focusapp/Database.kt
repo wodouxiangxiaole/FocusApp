@@ -120,9 +120,7 @@ class Database() {
                         newUser.credits=rs.getString(2)
                     }
                     userList.add(newUser)
-                 //   println("debug111: ${rs.getString(6)}")
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -131,6 +129,42 @@ class Database() {
         a1.join()
         return userList
     }
+
+    fun getFriStat(query:String): Int? {
+        var rt: Int? = null
+        val a1 = Thread  {
+            try {
+                val stat: Statement = connection!!.createStatement()
+                val rs = stat.executeQuery(query)
+
+                while(rs.next()){
+                    rt= rs.getString(1).toInt()
+                  //  println("debug:sss ${rs.getString(1)}")
+                }
+
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        a1.start()
+        a1.join()
+        return rt
+    }
+
+    fun updateFriStat(query:String){
+        CoroutineScope(IO).launch{
+            try {
+                val stat: Statement = connection!!.createStatement()
+                stat.executeQuery(query)
+                println("debug: succeed1")
+            } catch (e: Exception) {
+                e.printStackTrace()
+              //  println("debug: fail")
+            }
+        }
+    }
+
 
     fun getUser(query: String):MutableMap<String,String>{
         val map = mutableMapOf<String,String>()

@@ -19,4 +19,5 @@ class SettingViewModel : ViewModel() {
         value = "This is Setting Fragment"
     }
     val text: LiveData<String> = _text
+    var datachanged= MutableLiveData<Int>()
 }

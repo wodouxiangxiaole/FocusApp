@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/activity_view_profile.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/friends_adapter_list.xml" value="0.28248291015625004" />
         <entry key="app/src/main/res/layout/grid_view.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/item_search_list.xml" value="0.14398040771484374" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.18802083333333333" />

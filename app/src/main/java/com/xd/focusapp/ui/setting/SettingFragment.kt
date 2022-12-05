@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -42,7 +43,7 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var settingOptions: Array<String>
     private lateinit var user:MutableMap<String,String>
-    private val uid = 4
+    private var uid = -1;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +55,10 @@ class SettingFragment : Fragment() {
 
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val sp = root.context.getSharedPreferences("userSp", Context.MODE_PRIVATE)
+        uid = sp.getString("uid","-1")!!.toInt()
+
 
         db = Database()
 

@@ -9,7 +9,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways">
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:id="@+id/appbarlayout">
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
@@ -35,8 +36,35 @@
                 android:clickable="true"/>
 
         </androidx.appcompat.widget.Toolbar>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/text_reqMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appbarlayout"
+        android:text="Request from other users:"
+        android:layout_marginBottom="20dp"/>
+
+    <ListView
+        android:id="@+id/reqlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_reqMessage"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"></ListView>
+    <TextView
+        android:id="@+id/text_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friends:"
+        android:layout_below="@+id/reqlist"
+        android:layout_marginBottom="20dp"/>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_friends"
+        android:layout_marginBottom="50dp"
+        android:clickable="true"></ListView>
 </RelativeLayout>
