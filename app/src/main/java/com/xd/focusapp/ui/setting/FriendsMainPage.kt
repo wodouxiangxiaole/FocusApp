@@ -43,10 +43,6 @@ class FriendsMainPage : AppCompatActivity() {
             finish()
         }
 
-
-
-
-
     }
 
     override fun onResume() {

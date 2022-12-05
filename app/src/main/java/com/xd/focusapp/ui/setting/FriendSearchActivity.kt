@@ -38,8 +38,7 @@ class FriendSearchActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener{
-            val intent = Intent(this, FriendsMainPage::class.java)
-            startActivity(intent)
+            finish()
         }
 
         users= mutableListOf()
