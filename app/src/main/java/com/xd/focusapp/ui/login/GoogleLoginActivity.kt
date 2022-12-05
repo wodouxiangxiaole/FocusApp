@@ -43,9 +43,19 @@ class GoogleLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_google_login)
         oneTapClient = Identity.getSignInClient(this)
-
+        println("Debug: oneTapClient")
         firebaseAuth = Firebase.auth
+        println("Debug: firebaseAuth")
+        //just for testing purposes
+
+        if(firebaseAuth.currentUser != null){
+            println("Debug: firebaseAuth.currentUser = ${firebaseAuth.currentUser!!.email.toString()}")
+            firebaseAuth.signOut()
+            println("Debug: firebaseAuth.signOut ")
+        }
         //firebaseAuth.signOut()
+
+
         db = Database()
         progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Google login ...")
@@ -78,6 +88,7 @@ class GoogleLoginActivity : AppCompatActivity() {
         //firebaseUser= firebaseAuth.currentUser!!
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+        println("Debug:googleSignInClient")
         signIn()
 
     }
