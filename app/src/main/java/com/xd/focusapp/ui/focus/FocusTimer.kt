@@ -212,13 +212,13 @@ class FocusTimer: AppCompatActivity() {
         if (timeToGetPrize >= 0) {
             var res = 3
 
-            if (timeToGetPrize >= 15 && timeToGetPrize < 30) {
+            if (timeToGetPrize >= 1 && timeToGetPrize < 2) {
                 /** reward common plant */
                 res = 3
-            } else if (timeToGetPrize >= 30 && timeToGetPrize < 45) {
+            } else if (timeToGetPrize >= 2 && timeToGetPrize < 3) {
                 /** reward uncommon plant */
                 res = 2
-            } else if (timeToGetPrize >= 45) {
+            } else if (timeToGetPrize >= 3) {
                 res = 1
                 /** reward rare plant */
             }
