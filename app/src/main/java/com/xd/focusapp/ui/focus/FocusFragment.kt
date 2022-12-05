@@ -43,7 +43,6 @@ class FocusFragment : Fragment() {
         /**
          * Allow user to set focus timer
          */
-
         var setTimer: TextView = binding.selectTime
         setTimer.setOnClickListener { v->
             var timePickerDialog = TimePickerFragment()

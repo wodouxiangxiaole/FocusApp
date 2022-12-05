@@ -26,6 +26,7 @@ import com.xd.focusapp.ui.collection.CollectionViewModel
 import com.xd.focusapp.ui.collection.CollectionViewModelFactory
 import com.xd.focusapp.ui.spinner.SpinnerFinishDialog
 import java.time.Instant
+import java.time.LocalDateTime
 
 
 class FocusTimer: AppCompatActivity() {
@@ -48,6 +49,7 @@ class FocusTimer: AppCompatActivity() {
     val CHANNEL_ID = "channelID"
     val CHANNEL_NAME = "channelName"
     val NOTIFY_ID = 0
+    private lateinit var startTime: String
     /**
      * Class for interacting with the main interface of the service.
      */
@@ -56,7 +58,6 @@ class FocusTimer: AppCompatActivity() {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             mService = (service as FocusService.LocalBinder).getService()
             bound = true
-
             timerLiveData = mService?.timerCountDownLiveData!!
             timerLiveData?.observe(that, { it->
                 println("debuggg livedata observe " + it + " " + randome)
@@ -104,6 +105,8 @@ class FocusTimer: AppCompatActivity() {
         setContentView(R.layout.activity_focus_timer)
 //        viewModel = ViewModelProvider(this).get(FocusViewModel::class.java)
         countDown = findViewById(R.id.countDown)
+        startTime = Instant.now().toString()
+
         if (savedInstanceState != null) {
             bound = savedInstanceState.getBoolean("serviceConnected", false)
         }
@@ -266,6 +269,7 @@ class FocusTimer: AppCompatActivity() {
             db.getUser(query)
 
             db.updateUserCredits(credits!!)
+            db.insertUserHistory(timeInMillSec/1000/60, startTime)
 
             intent.putExtra("email",uemail)
         }

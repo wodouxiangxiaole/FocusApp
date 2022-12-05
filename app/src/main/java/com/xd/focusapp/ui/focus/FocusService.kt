@@ -37,6 +37,7 @@ class FocusService : Service() {
 
         myService = this
     }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         println("debuggg onStartCommand " + randome)
         timeInMillSec = intent?.getIntExtra("timeInMillSec",0)!!
