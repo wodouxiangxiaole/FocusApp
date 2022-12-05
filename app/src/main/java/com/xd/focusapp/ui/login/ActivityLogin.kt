@@ -23,7 +23,6 @@ import com.xd.focusapp.ui.collection.CollectionViewModel
 
 open class ActivityLogin : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
 
     lateinit var inputEmail: EditText

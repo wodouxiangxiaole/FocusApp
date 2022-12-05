@@ -9,7 +9,17 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:tabGravity="fill"
+
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@color/blue_maya"
+        app:tabIndicatorGravity="stretch"
+        app:tabMode="auto"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small" />
 
 
     <androidx.viewpager2.widget.ViewPager2
