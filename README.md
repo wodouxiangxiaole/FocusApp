@@ -17,3 +17,4 @@ Dandan Sang: User signup + User login + UI design
 [ThreadDiagram.pdf](https://github.com/wodouxiangxiaole/FocusApp/files/10163403/ThreadDiagram.pdf)
 
 ## The Presentation Video
+https://www.youtube.com/watch?v=LcRi-7JpqVc
