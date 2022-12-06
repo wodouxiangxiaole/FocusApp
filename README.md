@@ -12,6 +12,7 @@ Huiyan Li: Focus Timer + UI design + MVVM design
 Dandan Sang: User signup + User login + UI design  
 
 ## APK
+[Click to download focusapp](https://drive.google.com/uc?export=download&id=1ejwuEKY6RZJcWGiuGH86EqkhDgUzCFaT)
 
 ## Thread Diagram
 [ThreadDiagram.pdf](https://github.com/wodouxiangxiaole/FocusApp/files/10163403/ThreadDiagram.pdf)
