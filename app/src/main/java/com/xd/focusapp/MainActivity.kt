@@ -1,9 +1,12 @@
 package com.xd.focusapp
 
+import android.Manifest
 import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract.Data
 import android.view.Menu
@@ -11,6 +14,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
@@ -43,8 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         println("timeMillis = ${System.currentTimeMillis()}")
 
-
-
+        checkPermissions()
+        cleanupNotification()
 //        val email = intent.getStringExtra("email")
 //        val name = intent.getStringExtra("name")
 //        val id = intent.getStringExtra("id")
@@ -135,6 +141,30 @@ class MainActivity : AppCompatActivity() {
         updateMenuTitles()
 
         return true
+    }
+
+    private fun checkPermissions() {
+
+        if (Build.VERSION.SDK_INT < 23) return
+        if (ContextCompat.checkSelfPermission(
+                this!!,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.POST_NOTIFICATIONS
+                ),
+                0
+            ) /* Execute when users already enable location */
+        }
+    }
+
+    fun cleanupNotification() {
+        val notifyManger = NotificationManagerCompat.from(this)
+        notifyManger.deleteNotificationChannel("channelID");
+        notifyManger.deleteNotificationChannel("channelID2")
     }
 
     fun updateMenuTitles(){

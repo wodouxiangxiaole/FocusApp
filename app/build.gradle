@@ -6,12 +6,13 @@ plugins {
 
 android {
     namespace 'com.xd.focusapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.xd.focusapp"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
+        compileSdkVersion 33
         versionCode 1
         versionName "1.0"
 

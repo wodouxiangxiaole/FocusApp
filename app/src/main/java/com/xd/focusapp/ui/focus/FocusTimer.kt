@@ -155,6 +155,7 @@ class FocusTimer: AppCompatActivity() {
             appContext = this.getApplicationContext() as Application
             appContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
         }
+        cleanupNotification()
     }
     override fun onPause() {
         super.onPause()
@@ -162,11 +163,18 @@ class FocusTimer: AppCompatActivity() {
 //        mService?.killPlantTimer = 0L
 
     }
+
+    fun cleanupNotification() {
+        val notifyManger = NotificationManagerCompat.from(this)
+        notifyManger.deleteNotificationChannel(CHANNEL_ID);
+        notifyManger.deleteNotificationChannel("channelID2")
+    }
     override fun onResume() {
         super.onResume()
         if (bound == true) {
             countDown.text = mService?.timeDisplay
         }
+        cleanupNotification()
     }
     override fun onStop() {
         super.onStop()
