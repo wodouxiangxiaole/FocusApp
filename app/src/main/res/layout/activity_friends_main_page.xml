@@ -49,10 +49,10 @@
     <ListView
         android:id="@+id/reqlist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_below="@+id/text_reqMessage"
         android:layout_marginBottom="20dp"
-        android:clickable="true"></ListView>
+        android:clickable="true" />
     <TextView
         android:id="@+id/text_friends"
         android:layout_width="match_parent"
@@ -60,11 +60,12 @@
         android:text="Friends:"
         android:layout_below="@+id/reqlist"
         android:layout_marginBottom="20dp"/>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_friends"
         android:layout_marginBottom="50dp"
-        android:clickable="true"></ListView>
+        android:clickable="true" />
 </RelativeLayout>
