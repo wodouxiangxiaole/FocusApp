@@ -77,14 +77,14 @@ open class ActivityLogin : AppCompatActivity() {
             performAuth()
         }
 
-//        if(firebaseAuth.currentUser != null){
-//            val user  = firebaseAuth.currentUser!!.email.toString()
-//            println("debug: check firebase user $user " )
-//            val intent = Intent(this, MainActivity::class.java)
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            intent.putExtra("email", firebaseAuth.currentUser!!.email.toString())
-//            startActivity(intent)
-//        }
+        if(firebaseAuth.currentUser != null){
+            val user  = firebaseAuth.currentUser!!.email.toString()
+            println("debug: check firebase user $user " )
+            val intent = Intent(this, MainActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("email", firebaseAuth.currentUser!!.email.toString())
+            startActivity(intent)
+        }
 
 
     }

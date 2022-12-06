@@ -18,8 +18,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.xd.focusapp.Database
 import com.xd.focusapp.databinding.FragmentSettingBinding
+import com.xd.focusapp.ui.login.ActivityLogin
 import org.w3c.dom.Text
 import java.io.ByteArrayOutputStream
 
@@ -119,7 +121,11 @@ class SettingFragment : Fragment() {
                 startActivity(intent)
             }
             if(settingOptions[position]=="Switch User"){
-
+                if(FirebaseAuth.getInstance().currentUser!=null){
+                    FirebaseAuth.getInstance().signOut()
+                }
+                val intent  = Intent(requireActivity(), ActivityLogin::class.java)
+                startActivity(intent)
             }
             if(settingOptions[position]=="About"){
                 val dialog = about_dialog()
@@ -127,6 +133,8 @@ class SettingFragment : Fragment() {
                 dialog.show(parentFragmentManager, "about")
             }
             if(settingOptions[position]=="Weblink"){
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/wodouxiangxiaole/FocusApp"))
+                startActivity(browserIntent)
 
             }
 
