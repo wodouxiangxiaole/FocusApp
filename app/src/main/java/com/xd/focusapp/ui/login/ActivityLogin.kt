@@ -1,7 +1,9 @@
 package com.xd.focusapp.ui.login
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -66,7 +68,10 @@ open class ActivityLogin : AppCompatActivity() {
         firebaseAuth = Firebase.auth
 
         signUp.setOnClickListener{ startActivity(Intent(this, ActivitySignup::class.java)) }
-        guest.setOnClickListener{startActivity(Intent(this, MainActivity::class.java))}
+        guest.setOnClickListener{
+            getSharedPreferences("userSp", Context.MODE_PRIVATE).edit().clear().commit()
+
+            startActivity(Intent(this, MainActivity::class.java))}
         google.setOnClickListener{startActivity(Intent(this,GoogleLoginActivity::class.java))}
         loginBtn.setOnClickListener {
             performAuth()

@@ -122,7 +122,9 @@ class SettingFragment : Fragment() {
 
             }
             if(settingOptions[position]=="About"){
+                val dialog = about_dialog()
 
+                dialog.show(parentFragmentManager, "about")
             }
             if(settingOptions[position]=="Weblink"){
 
